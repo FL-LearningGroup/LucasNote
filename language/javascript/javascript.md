@@ -1,2 +1,2 @@
 # History
-![js history](img/the-history-of-javascription.jpg)
+![js history](img/the-history-of-javascript.jpg)
