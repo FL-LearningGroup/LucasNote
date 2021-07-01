@@ -1,0 +1,2 @@
+# LucasNote
+Learn knowledge note
