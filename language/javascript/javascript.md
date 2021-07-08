@@ -81,5 +81,6 @@ JavaScript can function as both a procedural and an object oriented language. Ob
 + ??
 + ?:
 
-### 
+### Others
++ async
 
