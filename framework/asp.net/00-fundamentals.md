@@ -257,6 +257,6 @@ By default, static files are served only from the web root directory and its sub
 <ItemGroup>
   <Content Update="wwwroot\local\**\*.*" CopyToPublishDirectory="Never" />
 </ItemGroup>
-``
+```
 
 In Razor .cshtml files, tilde-slash (~/) points to the web root. A path beginning with ~/ is referred to as a virtual path.
