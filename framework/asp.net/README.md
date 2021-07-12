@@ -1,6 +1,9 @@
 # aspnetcore
 Read source code of the aspnetcore
 
+# Build environment for debug and test source code.
+https://github.com/dotnet/aspnetcore/blob/main/docs/BuildFromSource.md
+
 ## 阅读的目的 
 1. 带着设计模式，多线程，异常处理阅读源代码。
 
