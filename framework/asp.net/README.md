@@ -1,6 +1,9 @@
 # aspnetcore
 Read source code of the aspnetcore
 
+# Worthy blogs
+https://andrewlock.net/exploring-the-new-project-file-program-and-the-generic-host-in-asp-net-core-3/
+
 # Build environment for debug and test source code.
 https://github.com/dotnet/aspnetcore/blob/main/docs/BuildFromSource.md
 
