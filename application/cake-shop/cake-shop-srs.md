@@ -104,4 +104,67 @@
 
 # 第三章 系统功能需求
 
-## 3.1 系统登录
+## 3.1 登录模块
+
+1. 账号登录。
+2. 账号注册。
+
+## 3.1 商品选购模块
+
+1. 商品加入购物车
+2. 商品移除购物车
+
+## 3.2 购物模块
+
+1. 下单
+2. 支付
+
+# 第四章 API
+
+# 第五章 技术选型
+
+前后端分离
+
+**前端**:
+
++ UmiJS
++ React
++ Bootstrap
+
+**后端**：
+
++ AspNetCore Web Api
+
+**服务器**:
+
++ 阿里云服务器
+
+**数据存储**:
+
++ 阿里云Mysql
+
+# 第六章 软硬件需求
+
+## 1. 用户界面
+
+## 1.1 主页面
+
+![main_page01.png](./imgs/main_page01.png)
+
+![main_page02.png](./imgs/main_page02.png)
+
+![main_page03.png](./imgs/main_page03.png)
+
+## 1.2 产品分类列表
+
+![goods_categoy_page01.png](./imgs/goods_category_page01.png)
+
+## 1.3 购物车
+
+![shopping_cart_page01.png](./imgs/shopping_cart_page01.png)
+
+## 1.4 用户中心
+
+![user_center_page01.png](./imgs/user_center_page01.png)
+![user_center_page02.png](./imgs/user_center_page02.png)
+

@@ -1,3 +1,11 @@
+## Git教学网址
+
+https://www.liaoxuefeng.com/wiki/896043488029600
+
+# Git 工作区
+
+![git-storage-place.png](./imgs/git-storage-place.png)
+
 # How to checkout a remote branch
 
 1. git fetch <remote> <branch name>
