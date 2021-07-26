@@ -32,3 +32,11 @@
 + 渲染render树
 
 # manifest.json file
+
+# 调色板
+
+https://paletton.com/
+
+# 贝塞尔曲线
+
+https://cubic-bezier.com/#.26,.59,.74,.45
