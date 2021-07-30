@@ -6,9 +6,18 @@ CSS（层叠样式表）用于设置和布置网页 - 例如，更改内容的`�
 
 http://jsbin.com/?html,output
 
+# CSS 布局
+
++ 弹性盒子： http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html
+
 # MDN CSS
 
 https://developer.mozilla.org/zh-CN/docs/Learn/CSS
+
+# CSS长度
+
++ 相对长度
++ 绝对长度
 
 # 动画
 

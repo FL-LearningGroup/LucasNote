@@ -40,3 +40,11 @@ https://paletton.com/
 # 贝塞尔曲线
 
 https://cubic-bezier.com/#.26,.59,.74,.45
+
+# Responsive layout
+
+响应式布局实际上是为了解决元素位置和大小适应屏幕尺寸的变化。
+
+# 组件开发
+
+开发组件，应该只关注组件自身(只影响自身CSS属性)。组件最外出html element应该禁止使用margin
