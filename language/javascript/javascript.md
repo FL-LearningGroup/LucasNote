@@ -14,6 +14,9 @@ JavaScript can function as both a procedural and an object oriented language. Ob
 + Web Browser: [V8 engine](https://v8.dev/)
 + Server: [NodeJS](https://nodejs.org/en/)
 
+## ES6
+https://es6.ruanyifeng.com/#docs/destructuring
+
 ## Data types(Eight)
 
 ### Seven primitives
@@ -81,6 +84,88 @@ JavaScript can function as both a procedural and an object oriented language. Ob
 + ??
 + ?:
 
-### Others
-+ async
+## Stream
+
+NodeJs中异步方式的同步编程方案，通过回调函数和事件。
+
+## Promise
+
+**为什么需要Promise**
+
+同步一系列异步方法。
+
+**什么是Promise**
+
+Promise是在NodeJs中异步方式的同步编程方案，传统的异步解决方案是通过回调函数和事件。
+
+**Promise原理**
+
+Promise像是一个容器，容器里存放着某个未来才会结束的事件。可以从容器里获取事件的状态。
+
+**Promise有三种状态**
+
++ pending(进行中)
++ fulfilled(已成功)
++ rejected(已失败)
+
+转换方向，状态不可逆
+
++ pending ---> fulfilled
++ pending ---> rejected
+
+**Promise缺点**
+
+1. 无法取消Promise，一旦新建它就会立即执行，无法中途取消。
+2. Promise内部抛出的错误，不会反应到外部。只能通过.catch捕获，exception具有冒泡性质。
+3. 当处于pending状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。
+
+**Promise Exception**
+
+Promise内部抛出的错误，不会反应到外部。只能通过.catch捕获，exception具有冒泡性质。
+
+Node.js 有一个`unhandledRejection`事件，专门监听未捕获的reject错误
+
+```js
+///unhandledRejection事件的监听函数有两个参数，第一个是错误对象，第二个是报错的 Promise 实例，它可以用来了解发生错误的环境信息。
+process.on('unhandledRejection', function (err, p) {
+  throw err;
+});
+```
+
+**注意，Node 有计划在未来废除unhandledRejection事件。如果 Promise 内部有未捕获的错误，会直接终止进程，并且进程的退出码不为 0。**
+
+**example**
+```js
+// Implement Ajax via Promise
+
+const getJson = function(url) {
+    const promise = new Promise(function(resolve, reject) {
+        const handler = function() {
+            if (this.readyStae !== 4) {
+                return;
+            }
+            if (this.statys === 200) {
+                resolve(this.response);
+            } else {
+                reject(new Error(this.statusText));
+            }
+        };
+
+        const client = new XMLHttpRequest();
+        client.open('Get', url);
+        client.onreadyStatechange = handler;
+        client.responseType = 'json';
+        client.setRequestHeader("Accept", "application/json");
+        client.send();
+    });
+
+    return promise;
+}
+
+getJson("https://es6.ruanyifeng.com/posts.json").then(function(json) {
+    console.log('Contents: ' + json);
+}, function(error) {
+    console.error('error: ', error)
+}).catch()
+```
 

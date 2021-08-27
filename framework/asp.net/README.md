@@ -6,7 +6,6 @@ Read source code of the aspnetcore
 
 + Architecture PPT: https://speakerdeck.com/davidfowl/asp-dot-net-core-architecture-overview
 + Part 1: https://www.youtube.com/watch?v=d9Bjg31VuHw
-
 + Part 2: https://www.youtube.com/watch?v=x_AXKLfG8o0&t=0s
 + Part 3: https://www.youtube.com/watch?v=OTpxQFXxKPs
 

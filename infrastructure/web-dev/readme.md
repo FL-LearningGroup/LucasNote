@@ -2,6 +2,7 @@
 
 **Ref Link:**
 + https://zh-hans.reactjs.org/docs/create-a-new-react-app.html#creating-a-toolchain-from-scratch
++ SwiperJs Demo: https://swiperjs.com/demos#default
 
 **一组 JavaScript 构建工具链通常由这些组成：**
 
@@ -10,6 +11,9 @@
 + 一个编译器，例如 Babel。它能让你编写的新版本 JavaScript 代码，在旧版浏览器中依然能够工作。
 
 搭建指南：https://blog.usejournal.com/creating-a-react-app-from-scratch-f3c693b84658
+
+# 信息网站
++ [out]: https://www.smashingmagazine.com/
 
 # 网站类型
 
@@ -33,13 +37,12 @@
 
 # manifest.json file
 
-# 调色板
+# 素材网站
 
-https://paletton.com/
-
-# 贝塞尔曲线
-
-https://cubic-bezier.com/#.26,.59,.74,.45
++ 调色板: https://paletton.com/
++ 贝塞尔曲线:https://cubic-bezier.com/#.26,.59,.74,.45
++ 图标: https://www.flaticon.com/
++ Loding: https://loading.io/
 
 # Responsive layout
 
@@ -48,3 +51,8 @@ https://cubic-bezier.com/#.26,.59,.74,.45
 # 组件开发
 
 开发组件，应该只关注组件自身(只影响自身CSS属性)。组件最外出html element应该禁止使用margin
+
+# 如何在没有数据的情况下，搭建页面
+
+**数据是通过Http从服务端获取数据**
+为了之后能平滑的切换，前端应利用接口定义模拟http请求。

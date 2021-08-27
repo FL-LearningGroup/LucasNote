@@ -2,6 +2,10 @@
 
 A JavaScript library for building user interfaces.
 
+# Lifecycles
+
+https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
+
 # React base on TypeScript
 
 ## Usual Type
