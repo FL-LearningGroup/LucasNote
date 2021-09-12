@@ -14,3 +14,7 @@ A thread is a basic unit of CPU utilization, consisting of a program counter, a 
 A task is a set of program instructions that are loaded in memory.
 
 ![process-thread-task](https://github.com/FL-LearningGroup/OperationSystem/blob/main/process-thread-task.png)
+
+# 视频教程
+
++ 清华操作系统: https://www.bilibili.com/video/BV1uW411f72n?from=search&seid=6757714211184732131&spm_id_from=333.337.0.0

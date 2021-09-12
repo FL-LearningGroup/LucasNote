@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="L6ftzaXv-pbHl7mcJE_a" name="系统结构">
-        <mxGraphModel dx="1001" dy="790" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#00CCCC" math="0" shadow="0">
+        <mxGraphModel dx="1065" dy="790" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="#00CCCC" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -287,6 +287,17 @@
                 </mxCell>
                 <mxCell id="rtPGg8NePpWLPW3wqGI3-26" value="1. 生成订单清单前，检查用户是否登录" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FF0000;" vertex="1" parent="rtPGg8NePpWLPW3wqGI3-1">
                     <mxGeometry x="40" y="70" width="250" height="20" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="7Hzf8RNBwKKPbnxorK81" name="WebWinodwStorage">
+        <mxGraphModel dx="1065" dy="790" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+            <root>
+                <mxCell id="vjdWPhTV5Z2zP2kFDylB-0"/>
+                <mxCell id="vjdWPhTV5Z2zP2kFDylB-1" parent="vjdWPhTV5Z2zP2kFDylB-0"/>
+                <mxCell id="vjdWPhTV5Z2zP2kFDylB-4" value="为什么考虑将Goods信息储存在Windows Local Storage&lt;br&gt;1. 网上商店主要是查询商品信息(Select)， 不会对商品信息进行跟新和删除&lt;br style=&quot;font-size: 14px&quot;&gt;好处:&lt;br&gt;1. 应用在启动时，获取Goods的所有信息。 后期对商品的查询，可以前端进行处理。&lt;br&gt;&lt;br&gt;坏处:&lt;br&gt;1. 储存在windows local storage中的数据无安全性" style="text;html=1;strokeColor=#36393d;fillColor=#eeeeee;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;fontColor=#000000;fontSize=14;" vertex="1" parent="vjdWPhTV5Z2zP2kFDylB-1">
+                    <mxGeometry x="30" y="50" width="700" height="140" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

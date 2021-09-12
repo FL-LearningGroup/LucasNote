@@ -135,6 +135,34 @@ process.on('unhandledRejection', function (err, p) {
 **注意，Node 有计划在未来废除unhandledRejection事件。如果 Promise 内部有未捕获的错误，会直接终止进程，并且进程的退出码不为 0。**
 
 **example**
+
+```js
+// Simple
+
+const promise = new Promise(function(resolve, reject) {
+    let flag = false;
+    if (flag) {
+        return resolve("fulfilled");
+    } 
+
+    return reject("reject");
+})
+
+promise.then(result => console.log(result)).catch(error => console.log(error));
+
+```
+
+```js
+const p1 = new Promise(function (resolve, reject) {
+  setTimeout(() => reject(new Error('fail')), 3000)
+})
+
+const p2 = new Promise(function (resolve, reject) {
+  setTimeout(() => resolve(p1), 1000)
+}
+```
+
+
 ```js
 // Implement Ajax via Promise
 

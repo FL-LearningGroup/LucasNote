@@ -5,3 +5,8 @@
 # Foreign Learn site
 + Picture for english: https://www.pinterest.com/
 + BBC English: https://www.bbc.co.uk/learningenglish/english/
+
+# 教程
++ 美式英语发音教程
+    - https://www.bilibili.com/video/BV1n54y1B7bE/?spm_id_from=333.788.recommend_more_video.1
+    - [配套文档](./The Complete Training Manual.pdf)
