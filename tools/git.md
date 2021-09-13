@@ -21,3 +21,10 @@ https://www.liaoxuefeng.com/wiki/896043488029600
 2. Remote:  
     - git rest commitid
     - git push -f origin branch
+
+# checkout remote branch
+
+```git
+git fetch origin generation
+git checkout -b lucas/logz origin/generation
+```

@@ -18,3 +18,8 @@ A task is a set of program instructions that are loaded in memory.
 # 视频教程
 
 + 清华操作系统: https://www.bilibili.com/video/BV1uW411f72n?from=search&seid=6757714211184732131&spm_id_from=333.337.0.0
+
+
+# Questions Note
+
+1. 进程，线程，并发，并行，事件循环，阻塞/非阻塞
