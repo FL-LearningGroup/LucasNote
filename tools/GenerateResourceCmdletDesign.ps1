@@ -1,3 +1,4 @@
+# The cmdlet format is define as verb-subject in this script. 
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$false,
@@ -16,8 +17,6 @@ param (
     [string[]]
     $CmdletPriority
 )
-
-# The cmdlet format is define as verb-subject in this script. 
 
 # If the path parameter is null, let the current path as the value of the path parameter
 if (!$PSBoundParameters.ContainsKey("Path")) {
@@ -49,7 +48,7 @@ if ($PSBoundParameters.ContainsKey("CmdletPriority")) {
 
 for($index=0; $index -lt $cmdLets.Length; $index++) {
     # Join 0 prefix with New verb.
-    $verb = $cmdLets[$index].Name.Split("-")[0] -eq 'New' ? 'ANew' : $cmdLets[$index].Name.Split("-")[0]
+    $verb = $cmdLets[$index].Name.Split("-")[0] -eq 'New' ? '0New' : $cmdLets[$index].Name.Split("-")[0]
     # Join priority with Subject.
     $originSubject = $cmdLets[$index].Name.Split("-")[1].Split(".")[0];
     $subject = $null -eq $cmdletPriorityHash ? $originSubject : ($null -eq $cmdletPriorityHash[$originSubject] ? $originSubject : $cmdletPriorityHash[$originSubject].ToString() + $originSubject)
