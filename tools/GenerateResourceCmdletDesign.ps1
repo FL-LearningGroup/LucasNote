@@ -8,6 +8,12 @@ param (
     $Path,
 
     [Parameter(Mandatory=$false,
+    HelpMessage="The Path parameter and the OutPath parameter are the same if not passed OutPath parameter."
+    )]
+    [string]
+    $OutPath,
+
+    [Parameter(Mandatory=$false,
     HelpMessage="Automatic intercept resource name(Accounts) from Az.Accounts.md if not passed ResourceName parameter.")]
     [string]
     $ResourceName,
@@ -21,6 +27,10 @@ param (
 # If the path parameter is null, let the current path as the value of the path parameter
 if (!$PSBoundParameters.ContainsKey("Path")) {
     $Path = $PSScriptRoot
+}
+
+if (!$PSBoundParameters.ContainsKey("OutPath")) {
+    $OutPath = $Path
 }
 
 # Get resource name
@@ -66,7 +76,7 @@ $sortedCmdlets | Out-String | Write-Debug
 
 $designFile = 'Az.' + $ResourceName + '.design.md'
 
-$outFilePath = Join-Path $Path $designFile
+$outFilePath = Join-Path $OutPath $designFile
 
 # Try remove out file
 Write-Host -ForegroundColor Green "Delete the $designFile file if it exists."
