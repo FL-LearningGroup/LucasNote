@@ -86,8 +86,7 @@ foreach($cmdlet in $sortedCmdlets) {
         $designDoc = $designDoc.Remove($designDoc.IndexOf('## DESCRIPTION'), $designDoc.IndexOf('## EXAMPLES') - $designDoc.IndexOf('## DESCRIPTION'))
     }
 
-    $designDoc = $designDoc -replace '`powershell', '`'
-    #$designDoc = $designDoc -replace '```', '```powershell'
+    $designDoc = $designDoc -replace '```(\r\n\w{1})', '```powershell$1'
     $designDoc = $designDoc -replace '###', '+'
     $designDoc = $designDoc -replace '#+', '####'
 
@@ -95,5 +94,3 @@ foreach($cmdlet in $sortedCmdlets) {
 }
 
 Write-Host -ForegroundColor Green "Genereated $designFile completed in $outFilePath. path."
-
-# .\GenerateCmdletDesign.ps1 -Path .\Logz\azure-powershell\src\Logz\docs\ -CmdletPriority 'AzLogzMonitor','AzLogzSubAccount'
