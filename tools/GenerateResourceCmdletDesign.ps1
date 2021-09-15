@@ -23,6 +23,8 @@ param (
     [string[]]
     $CmdletPriority
 )
+try  {
+
 
 # If the path parameter is null, let the current path as the value of the path parameter
 if (!$PSBoundParameters.ContainsKey("Path")) {
@@ -103,3 +105,9 @@ foreach($cmdlet in $sortedCmdlets) {
 }
 
 Write-Host -ForegroundColor Green "Genereated $designFile completed in $outFilePath. path."
+return
+}
+catch {
+    throw
+    return
+}
