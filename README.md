@@ -11,8 +11,6 @@
 - [application](./application)
     - [cake-shop](./application/cake-shop)
 - [books](./books)
-- [design](./design)
-    - [application-design](./design/application-design)
 - [framework](./framework)
 - [infrastructure](./infrastructure)
 - [language](./language)
