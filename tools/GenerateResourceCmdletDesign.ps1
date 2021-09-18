@@ -21,7 +21,7 @@ param (
     [Parameter(Mandatory=$false,
     HelpMessage="Specify the order of cmdlets in the design document.")]
     [string[]]
-    $CmdletPriority
+    $SubjectPriority
 )
 try  {
 
@@ -50,11 +50,11 @@ $cmdLets | Add-Member -NotePropertyName Verb -NotePropertyValue $null
 $cmdLets | Add-Member -NotePropertyName Subject -NotePropertyValue $null
 
 # set priority for the specified cmdlets.
-if ($PSBoundParameters.ContainsKey("CmdletPriority")) {
+if ($PSBoundParameters.ContainsKey("SubjectPriority")) {
     $priority = 0
-    $cmdletPriorityHash = @{}
-    foreach($cmdlet in $CmdletPriority) {
-        $cmdletPriorityHash.Add($cmdlet, $priority++)
+    $SubjectPriorityHash = @{}
+    foreach($cmdlet in $SubjectPriority) {
+        $SubjectPriorityHash.Add($cmdlet, $priority++)
     }
 }
 
@@ -63,7 +63,7 @@ for($index=0; $index -lt $cmdLets.Length; $index++) {
     $verb = $cmdLets[$index].Name.Split("-")[0] -eq 'New' ? '0New' : $cmdLets[$index].Name.Split("-")[0]
     # Join priority with Subject.
     $originSubject = $cmdLets[$index].Name.Split("-")[1].Split(".")[0];
-    $subject = $null -eq $cmdletPriorityHash ? $originSubject : ($null -eq $cmdletPriorityHash[$originSubject] ? $originSubject : $cmdletPriorityHash[$originSubject].ToString() + $originSubject)
+    $subject = $null -eq $SubjectPriorityHash ? $originSubject : ($null -eq $SubjectPriorityHash[$originSubject] ? $originSubject : $SubjectPriorityHash[$originSubject].ToString() + $originSubject)
     
     $cmdLets[$index].Cmdlet =  $cmdLets[$index].Name.Split(".")[0];
     $cmdLets[$index].Verb = $verb

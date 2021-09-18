@@ -40,7 +40,7 @@ Why: 数据结构可以带来更高的运行或者储存效率。并且伴随有
 
 ## Category
 
-![dt-category](https://github.com/FL-LearningGroup/DataStructure/blob/main/dt-category.png)
+![dt-category](./dt-category.png)
 
 + 线性结构
   - Array
