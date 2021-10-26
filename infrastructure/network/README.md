@@ -1,26 +1,35 @@
 # Network
 
-## NetWork Model
-应用层(http, ftp)
+是由一些位于网络节点上提供共享资源的计算机组成的。
 
-传输层(TCP/UDP)
+## NetWork模型
 
-网络层(IP)
+![NetWork模型](./imgs/network-model.drawio.png)
 
-网络接口层(以太网协议)
+## 网络硬件
 
-![image](https://github.com/FL-LearningGroup/Network/blob/main/NetworkModel.jpg)
-![image](https://github.com/FL-LearningGroup/Network/blob/main/NetworkProtocolUseFollow.jpg)
++ 路由器
++ 交换机(接入广域网internet)
++ 网桥
++ 网关
++ 网络协议(TCP/IP协议)
++ 网卡(计算机通过网卡接入局域网络)
 
-# 关于 TCP/IP，必知必会的十个问题
+# IP
 
-https://juejin.cn/post/6844903490595061767
+在Internet上，每一个节点都依靠的IP地址互相区分和相互联系。IP地址是一个32位二进制数的地址,由4个8位字段组成，每个字段之间用点号隔开,用于标识TCP/IP宿主机。
 
-# MAC地址与IP地址的区别
+每个IP地址都包含两部分:**网络ID**和**主机ID**。网络ID标识在同一个物理网络上的所有宿主机，主机ID标识该物理网络上的每一个宿主机，于是整个Internet上的每个计算机都依靠各自的IP地址来标识。
+
+**例如**
+
+每一台联网的计算机无权自行设定IP地址，有一个统一的机构-IANA负责对申请的组织分配网络ID,而该组织可以对自己的网络中的每一个主机分配一个主机ID，正如一个单位无权决定自己在所属城市的街道名称和门牌号，但可以自主决定本单位内部的各个办公室编号一样。
+
+## MAC地址与IP地址的区别
 
 https://zhuanlan.zhihu.com/p/74432070
 
-## 区别
+**区别**
 
 1. 对于网络中的一些设备，路由器或者是PC及而言，IP地址的设计是出于拓扑设计出来的，只要在不重复IP地址的情况下，它是可以随意更改的；而MAC地址是根据生产厂商烧录好的，它一般不能改动的，一般来说，当一台PC机的网卡坏了之后，更换了网卡之后MAC地址就会变了。
 
@@ -39,5 +48,6 @@ https://zhuanlan.zhihu.com/p/74432070
     - 网络管理软件
     - 网络通信协议
 
-# 视频教程
-1. 哈尔滨工业大学-计算机网络: https://www.bilibili.com/video/av10101468/
+# 资源
++ [掘金 关于 TCP/IP，必知必会的十个问题](https://juejin.cn/post/6844903490595061767)
++ [视频教程 哈尔滨工业大学-计算机网络](https://www.bilibili.com/video/av10101468/)
