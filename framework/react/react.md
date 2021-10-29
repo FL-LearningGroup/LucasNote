@@ -40,3 +40,5 @@ this.setState((prevState) => {
 });
 ```
 You can find detailed explanations on how setState works from the [React docs](https://reactjs.org/docs/react-component.html#setstate).
+
+TypeScript在React中使用总结: https://segmentfault.com/a/1190000016526361
