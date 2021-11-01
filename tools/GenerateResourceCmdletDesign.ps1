@@ -23,9 +23,8 @@ param (
     [string[]]
     $SubjectPriority
 )
+Write-Host -ForegroundColor Yellow "The cmdlet format is define as verb-subject in this script. Take Get-AzDatabricksWorkspace as example. The verb is Get. The subject is AzDatabricksWorkspace."
 try  {
-
-
 # If the path parameter is null, let the current path as the value of the path parameter
 if (!$PSBoundParameters.ContainsKey("Path")) {
     $Path = $PSScriptRoot

@@ -10,3 +10,8 @@
 
 https://umijs.org/config#title
 
+## Enable scss
+1. Install Dart sass(Downloa from the github repo),Then configure system environment path(path exaple:\dart-sass-1.43.4-windows-x64\dart-sass).
+2. yarn add sass-loader sass
+3. yarn add @umijs/plugin-sass
+
