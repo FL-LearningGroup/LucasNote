@@ -44,23 +44,24 @@ insert into Customer(PhoneNumber, Name, Points) values (CONCAT('1',FLOOR(RAND() 
 
 select * from Customer;
 
-create table if not exists CustomerBrithday (
+create table if not exists CustomerBirthday (
     Id int unsigned AUTO_INCREMENT primary key,
     SysId binary(16) not null unique default(UUID_TO_BIN(UUID())),
     SysDate timestamp not null default CURRENT_TIMESTAMP,
     CustomerSysId binary(16) not null,
-    BirthdayDate datetime,
+    BirthdayDate date,
     Relation varchar(45),
     index idx_usersysid (CustomerSysId)
 )engine=INNODB;
 
-create table if not exists CustomerDeliveryAddress (
+create table if not exists CustomerDelivery (
     Id int unsigned AUTO_INCREMENT primary key,
     SysId binary(16) not null unique default(UUID_TO_BIN(UUID())),
     SysDate timestamp not null default CURRENT_TIMESTAMP,
     CustomerSysId binary(16) not null,
-    Address varchar(255),
-    Role enum('default','opational'),
+    ContactNumber varchar(11) not null,
+    Address varchar(255) not null,
+    Role enum('default','optional'),
     index idx_usersysid (CustomerSysId)
 )engine=INNODB;
 
@@ -71,7 +72,6 @@ create table if not exists Goods (
     SysDate timestamp not null default CURRENT_TIMESTAMP,
     ZhName varchar(45) not null,
     EnName varchar(45) not null unique,
-    Type varchar(45) not null,
     Description text,
     Status enum('OnShelf', 'OffShelf'),
     index idx_enname (EnName) 
@@ -99,9 +99,9 @@ create table if not exists GoodsSpec (
     SysId binary(16) not null unique default(UUID_TO_BIN(UUID())),
     SysDate timestamp not null default CURRENT_TIMESTAMP,
     GoodsSysid binary(16) not null,
-    Size varchar(45) not null,
+    Size int unsigned not null,
     Layer int unsigned not null default(1),
-    Price decimal(5,2) not null,
+    Price double not null,
     Dinnerware varchar(255) not null,
     index idx_goodssysid (GoodsSysid)
 )engine=INNODB;
@@ -111,10 +111,9 @@ create table if not exists GoodsCategory (
     Id int unsigned AUTO_INCREMENT primary key,
     SysId binary(16) not null unique default(UUID_TO_BIN(UUID())),
     SysDate timestamp not null default CURRENT_TIMESTAMP,
-    Category varchar(45) not null,
-    CategorySysId binary(16) not null,
-    SubCategory varchar(45) not null,
-    index idx_categorySysId (CategorySysId)
+    Category varchar(45) not null unique,
+    ParentSysId binary(16),
+    index idx_parentSysId (ParentSysId)
 )engine=INNODB;
 
 
@@ -126,8 +125,9 @@ create table if not exists OrderHistory (
     CustomerPhoneNumber varchar(11) not null,
     CustomerName varchar(45) not null,
     DeliveryAddress varchar(255) not null,
+    DeliveryDateTime timestamp not null,
     Receipt varchar(255) not null,
-    Price decimal(5,2) not null,
+    Price double not null,
     Comments text,
     index idx_custome (CustomerPhoneNumber, CustomerName)
 )engine=INNODB;
@@ -136,12 +136,13 @@ create table if not exists OrderGoodsHistory (
     Id int unsigned AUTO_INCREMENT primary key,
     SysId binary(16) not null unique default(UUID_TO_BIN(UUID())),
     SysDate timestamp not null default CURRENT_TIMESTAMP,
+    OrderSysId binary(16) not null,
     GoodsSysId binary(16) not null,
-    GoodsEnName varchar(45) not null,
+    GoodsZhName varchar(45) not null,
     GoodsSpec varchar(45) not null,
-    GoodsPrice decimal(5,2) not null,
+    GoodsPrice double not null,
     GoodsCard varchar(45),
-    index idx_goods (GoodsSysId, GoodsEnName)
+    index idx_goods (GoodsSysId, GoodsZhName)
 )engine=INNODB;
 
 
@@ -182,4 +183,9 @@ select CHAR_LENGTH("啊实打实大苏打")；
 select SUBSTRING("啊实打实大苏打", FLOOR(rand() * CHAR_LENGTH("啊实打实大苏打")), 1);
 select (CAST(RAND() * (3-1) AS UNSIGNED) + 1);
 
-select GenerateRandomChinese(10)；
+select ROUND(RAND() * 1000, 2);
+select RAND() LIMIT 1;
+select DATE_SUB(CURDATE(), INTERVAL FLOOR(1 + RAND() * 29) YEAR);
+select FUNC_GenerateRandomChinese(200);
+
+Call PROC_GnerateMockData(200, 500, 1);
