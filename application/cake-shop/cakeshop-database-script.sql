@@ -101,7 +101,7 @@ create table if not exists GoodsSpec (
     GoodsSysid binary(16) not null,
     Size int unsigned not null,
     Layer int unsigned not null default(1),
-    Price double not null,
+    Price double unsigned not null,
     Dinnerware varchar(255) not null,
     index idx_goodssysid (GoodsSysid)
 )engine=INNODB;
@@ -124,10 +124,11 @@ create table if not exists OrderHistory (
     CreateDate datetime not null,
     CustomerPhoneNumber varchar(11) not null,
     CustomerName varchar(45) not null,
+    DeliveryPhoneNumber varchar(11) not null,
     DeliveryAddress varchar(255) not null,
     DeliveryDateTime timestamp not null,
     Receipt varchar(255) not null,
-    Price double not null,
+    Price double unsigned not null,
     Comments text,
     index idx_custome (CustomerPhoneNumber, CustomerName)
 )engine=INNODB;
@@ -140,7 +141,7 @@ create table if not exists OrderGoodsHistory (
     GoodsSysId binary(16) not null,
     GoodsZhName varchar(45) not null,
     GoodsSpec varchar(45) not null,
-    GoodsPrice double not null,
+    GoodsPrice double unsigned not null,
     GoodsCard varchar(45),
     index idx_goods (GoodsSysId, GoodsZhName)
 )engine=INNODB;
@@ -158,26 +159,35 @@ create temporary table if not exists TempGoodsMockData (
 -- drop table TempGoodsMockData;
 select * from TempGoodsMockData;
 
-insert into TempGoodsMockData(ZhName, EnName) values 
-('悉尼之风', 'Sydney wind'),
-('冰雪奇缘', 'Frozen'),
-('巧克力物语', 'Sydney wind'),
-('鲜果塔', 'Fruit Tower'),
- ('甜蜜城堡', 'Sweet Castle'),
-('马卡龙の吻', 'Macarons kiss'),
-('梦の甜', 'Sweet dream'),
-('酥心', 'Crisp cake'),
-('永恒的心', 'my heart forever'),
-('粉红小猪', 'Pink pig'),
-('多啦A梦', 'doraemon'),
-('米奇', 'Mickey'),
-('佩奇', 'Hello Kitty'),
-('提拉米苏', 'Tiramisu'),
-('恋恋抹茶', "Green tea's love"),
-('红薯蛋糕', 'Sweet potato cake'),
-('爱的旋律', 'The melody of love'),
-('麦哲伦', 'The Magellan Galaxy'),
-('果蕾', 'Fruit flavor');
+-- insert into TempGoodsMockData(ZhName, EnName) values 
+-- ('悉尼之风', 'Sydney wind'),
+-- ('冰雪奇缘', 'Frozen'),
+-- ('巧克力物语', 'Sydney wind'),
+-- ('鲜果塔', 'Fruit Tower'),
+--  ('甜蜜城堡', 'Sweet Castle'),
+-- ('马卡龙の吻', 'Macarons kiss'),
+-- ('梦の甜', 'Sweet dream'),
+-- ('酥心', 'Crisp cake'),
+-- ('永恒的心', 'my heart forever'),
+-- ('粉红小猪', 'Pink pig'),
+-- ('多啦A梦', 'doraemon'),
+-- ('米奇', 'Mickey'),
+-- ('佩奇', 'Hello Kitty'),
+-- ('提拉米苏', 'Tiramisu'),
+-- ('恋恋抹茶', "Green tea's love"),
+-- ('红薯蛋糕', 'Sweet potato cake'),
+-- ('爱的旋律', 'The melody of love'),
+-- ('麦哲伦', 'The Magellan Galaxy'),
+-- ('果蕾', 'Fruit flavor');
+
+create table if not exists Dev_SqlExecutedHistory(
+    Id int unsigned AUTO_INCREMENT primary key,
+    SysDate timestamp not null default CURRENT_TIMESTAMP,
+    ExecuteId   varchar(36) not null,
+    Name varchar(45) not null,
+    Message text,
+    index idx_01 (ExecuteId, Name)
+)engine=INNODB;
 
 select CHAR_LENGTH("啊实打实大苏打")；
 select SUBSTRING("啊实打实大苏打", FLOOR(rand() * CHAR_LENGTH("啊实打实大苏打")), 1);
@@ -188,4 +198,6 @@ select RAND() LIMIT 1;
 select DATE_SUB(CURDATE(), INTERVAL FLOOR(1 + RAND() * 29) YEAR);
 select FUNC_GenerateRandomChinese(200);
 
-Call PROC_GnerateMockData(200, 500, 1);
+Call PROC_GnerateMockData(200, 500, 1,1);
+
+select SUBSTRING("蛋糕-安定哈达沙克", 1, 2);
