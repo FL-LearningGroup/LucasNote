@@ -124,6 +124,7 @@ create table if not exists OrderHistory (
     CreateDate datetime not null,
     CustomerPhoneNumber varchar(11) not null,
     CustomerName varchar(45) not null,
+    DeliveryCustomerName varchar(45) not null,
     DeliveryPhoneNumber varchar(11) not null,
     DeliveryAddress varchar(255) not null,
     DeliveryDateTime timestamp not null,
@@ -198,6 +199,6 @@ select RAND() LIMIT 1;
 select DATE_SUB(CURDATE(), INTERVAL FLOOR(1 + RAND() * 29) YEAR);
 select FUNC_GenerateRandomChinese(200);
 
-Call PROC_GnerateMockData(200, 500, 1,1);
+Call PROC_GenerateMockData(200, 500, 1,1);
 
 select SUBSTRING("蛋糕-安定哈达沙克", 1, 2);

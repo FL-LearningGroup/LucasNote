@@ -23,3 +23,6 @@ grant all privileges on *.* to 'user'@'%' with grant option;
 resolved:
 
 SET GLOBAL log_bin_trust_function_creators = 1;
+
+## Convert datatime to string
+![datatime_to_string_in_mysql_oracle](./imgs/datatime_to_string_in_mysql_oracle.JPG)

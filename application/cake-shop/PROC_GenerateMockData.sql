@@ -1,5 +1,5 @@
---DROP PROCEDURE IF EXISTS PROC_GnerateMockData;
-create procedure PROC_GnerateMockData(in in_customerCountParam int, in in_goodsCountParam int, in in_clearMockData int, in in_debug int)
+--DROP PROCEDURE IF EXISTS PROC_GenerateMockData;
+create procedure PROC_GenerateMockData(in in_customerCountParam int, in in_goodsCountParam int, in in_clearMockData int, in in_debug int)
 begin
 declare var_goodsCategoryCount int;
 declare var_loopCount int unsigned; 
@@ -222,8 +222,8 @@ while var_loopCount <= in_goodsCountParam * 4 do
     from CustomerDelivery cd
     order by RAND() LIMIT 1;
 
-    insert into OrderHistory(CreateDate, CustomerPhoneNumber, CustomerName, DeliveryPhoneNumber,DeliveryAddress, DeliveryDateTime, Receipt, Price, Comments)
-    select DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL FLOOR(1 + RAND() * 99) DAY), c.PhoneNumber, c.Name, var_customerDeliveryPhone, var_customerDeliveryAddress, DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL FLOOR(2 + RAND() * 5) DAY),
+    insert into OrderHistory(CreateDate, CustomerPhoneNumber, CustomerName, DeliveryCustomerName, DeliveryPhoneNumber, DeliveryAddress, DeliveryDateTime, Receipt, Price, Comments)
+    select DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL FLOOR(1 + RAND() * 99) DAY), c.PhoneNumber, c.Name, CONCAT('配送用户-', FUNC_GenerateRandomChinese(FLOOR(2 + RAND() * 2))), var_customerDeliveryPhone, var_customerDeliveryAddress, DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL FLOOR(2 + RAND() * 5) DAY),
     CONCAT(FUNC_GenerateRandomChinese(FLOOR(10 + RAND() * 10)),';',FUNC_GenerateRandomChinese(FLOOR(4 + RAND() * 4))),
     ROUND(RAND()*1000, 2), FUNC_GenerateRandomChinese(FLOOR(10 + RAND() * 100))
     from Customer c 
