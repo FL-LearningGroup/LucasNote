@@ -202,3 +202,5 @@ select FUNC_GenerateRandomChinese(200);
 Call PROC_GenerateMockData(200, 500, 1,1);
 
 select SUBSTRING("蛋糕-安定哈达沙克", 1, 2);
+
+select DATE_FORMAT(SysDate, '%Y-%m-%d %H:%i:%s') sysdate from User;
