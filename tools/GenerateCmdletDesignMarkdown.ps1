@@ -1,29 +1,28 @@
-# The cmdlet format is define as verb-subject in this script. 
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$false,
-    HelpMessage="The current path as the value of the path parameter if not passed Path parameter."
+    HelpMessage="The path is the docs folder path. Default current script path if not pass value"
     )]
     [string]
     $Path,
 
     [Parameter(Mandatory=$false,
-    HelpMessage="The Path parameter and the OutPath parameter are the same if not passed OutPath parameter."
+    HelpMessage="The value the Path parameter and the OutPath parameter are the same if not passed OutPath parameter."
     )]
     [string]
     $OutPath,
 
     [Parameter(Mandatory=$false,
-    HelpMessage="Automatic intercept resource name(Accounts) from Az.Accounts.md if not passed ResourceName parameter.")]
+    HelpMessage="Automatic generate output file name  if not passed value.")]
     [string]
-    $ResourceName,
+    $OutputFileName,
 
     [Parameter(Mandatory=$false,
     HelpMessage="Specify the order of cmdlets in the design document.")]
     [string[]]
-    $SubjectPriority
+    $NounPriority
 )
-Write-Host -ForegroundColor Yellow "The cmdlet format is define as verb-subject in this script. Take Get-AzDatabricksWorkspace as example. The verb is Get. The subject is AzDatabricksWorkspace."
+
 try  {
 # If the path parameter is null, let the current path as the value of the path parameter
 if (!$PSBoundParameters.ContainsKey("Path")) {
@@ -35,56 +34,55 @@ if (!$PSBoundParameters.ContainsKey("OutPath")) {
 }
 
 # Get resource name
-if (!$PSBoundParameters.ContainsKey("ResourceName")) {
-    $ResourceName = (Get-ChildItem -Path $Path -Filter 'Az.*.md' -ErrorAction Stop).Name.Split(".")[1]
+if (!$PSBoundParameters.ContainsKey("OutputFileName")) {
+    $OutputFileName = 'Az.' + (Get-ChildItem -Path $Path -Filter 'Az.*.md' -ErrorAction Stop).Name.Split(".")[1] + '.design.md'
 }
 
 # Get all name and path of the cmdlets.
 Write-Debug "Get all cmdlets md file under the $Path folder."
 $cmdLets = Get-ChildItem -Path $Path -Filter '*-*.md' | Select-Object -Property FullName,Name
 
-# Add Cmdlet, Verb, Subject property for sort object.
+# Add Cmdlet, Verb, Noun property for sort object.
 $cmdLets | Add-Member -NotePropertyName Cmdlet -NotePropertyValue $null
 $cmdLets | Add-Member -NotePropertyName Verb -NotePropertyValue $null
-$cmdLets | Add-Member -NotePropertyName Subject -NotePropertyValue $null
+$cmdLets | Add-Member -NotePropertyName Noun -NotePropertyValue $null
 
 # set priority for the specified cmdlets.
-if ($PSBoundParameters.ContainsKey("SubjectPriority")) {
+if ($PSBoundParameters.ContainsKey("NounPriority")) {
     $priority = 0
-    $SubjectPriorityHash = @{}
-    foreach($cmdlet in $SubjectPriority) {
-        $SubjectPriorityHash.Add($cmdlet, $priority++)
+    $NounPriorityHash = @{}
+    foreach($cmdlet in $NounPriority) {
+        $NounPriorityHash.Add($cmdlet, $priority++)
     }
 }
 
 for($index=0; $index -lt $cmdLets.Length; $index++) {
     # Join 0 prefix with New verb.
     $verb = $cmdLets[$index].Name.Split("-")[0] -eq 'New' ? '0New' : $cmdLets[$index].Name.Split("-")[0]
-    # Join priority with Subject.
-    $originSubject = $cmdLets[$index].Name.Split("-")[1].Split(".")[0];
-    $subject = $null -eq $SubjectPriorityHash ? $originSubject : ($null -eq $SubjectPriorityHash[$originSubject] ? $originSubject : $SubjectPriorityHash[$originSubject].ToString() + $originSubject)
+    # Join priority with Noun.
+    $originNoun = $cmdLets[$index].Name.Split("-")[1].Split(".")[0];
+    $Noun = $null -eq $NounPriorityHash ? $originNoun : ($null -eq $NounPriorityHash[$originNoun] ? $originNoun : $NounPriorityHash[$originNoun].ToString() + $originNoun)
     
     $cmdLets[$index].Cmdlet =  $cmdLets[$index].Name.Split(".")[0];
     $cmdLets[$index].Verb = $verb
-    $cmdLets[$index].Subject = $subject
+    $cmdLets[$index].Noun = $Noun
 }
 
 
-$sortedCmdlets = $cmdLets | Sort-Object -Property @{Expression = "Subject"; Descending = $false},@{Expression = "Verb"; Descending = $false}
+$sortedCmdlets = $cmdLets | Sort-Object -Property @{Expression = "Noun"; Descending = $false},@{Expression = "Verb"; Descending = $false}
 
 "The sorted cmdles list : " | Write-Debug
 $sortedCmdlets | Out-String | Write-Debug
 
-$designFile = 'Az.' + $ResourceName + '.design.md'
 
-$outFilePath = Join-Path $OutPath $designFile
+$outFilePath = Join-Path $OutPath $OutputFileName
 
 # Try remove out file
-Write-Host -ForegroundColor Green "Delete the $designFile file if it exists."
+Write-Debug "Delete the $OutputFileName file if it exists."
 Remove-Item -Path $outFilePath -ErrorAction SilentlyContinue
 
 
-# Get cmdlet design message from the Verb-Subject.md file.
+# Get cmdlet design message from the Verb-Noun.md file.
 foreach($cmdlet in $sortedCmdlets) {
     $content = Get-Content -Path $cmdlet.FullName -ErrorAction Stop
     $contentStr = ($content | Out-String)
@@ -103,7 +101,7 @@ foreach($cmdlet in $sortedCmdlets) {
     $designDoc | Out-File -FilePath $outFilePath -Append -ErrorAction Stop
 }
 
-Write-Host -ForegroundColor Green "Genereated $designFile completed in $outFilePath. path."
+Write-Host "Genereated $outFilePath completed."
 return
 }
 catch {
