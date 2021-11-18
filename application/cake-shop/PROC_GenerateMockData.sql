@@ -5,6 +5,7 @@ declare var_goodsCategoryCount int;
 declare var_loopCount int unsigned; 
 
 declare var_customerSysId binary(16);
+declare var_customerDeliveryName varchar(45);
 declare var_customerDeliveryAddress varchar(255);
 declare var_customerDeliveryPhone varchar(11);
 declare var_goodsMaxId int unsigned;
@@ -75,8 +76,8 @@ CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table Cus
 
 set var_loopCount = 1;
 while var_loopCount <= in_customerCountParam * 3 do
-    insert into CustomerDelivery(CustomerSysId, ContactNumber, Address, Role)
-    select SysId, CONCAT('1',FLOOR(RAND() * 10000000000)), CONCAT(FUNC_GenerateRandomChinese(FLOOR(10 + RAND() * 10)),';',FUNC_GenerateRandomChinese(FLOOR(4 + RAND() * 4))), 'optional'
+    insert into CustomerDelivery(CustomerSysId,  ContactName, ContactNumber, Address, Role)
+    select SysId, FUNC_GenerateRandomChinese(FLOOR(2 + RAND() * 5)), CONCAT('1',FLOOR(RAND() * 10000000000)), CONCAT(FUNC_GenerateRandomChinese(FLOOR(10 + RAND() * 10)),';',FUNC_GenerateRandomChinese(FLOOR(4 + RAND() * 4))), 'optional'
     from Customer
     order by RAND() LIMIT 1;
     set var_loopCount = var_loopCount + 1;
@@ -218,12 +219,12 @@ CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table Goo
 CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table OrderHistory idata', in_debug); 
 set var_loopCount = 1;
 while var_loopCount <= in_goodsCountParam * 4 do
-    select cd.CustomerSysId, cd.ContactNumber, cd.Address into var_customerSysId, var_customerDeliveryPhone, var_customerDeliveryAddress
+    select cd.CustomerSysId, cd.ContactNumber, cd.ContactNumber, cd.Address into var_customerSysId, var_customerDeliveryName, var_customerDeliveryPhone, var_customerDeliveryAddress
     from CustomerDelivery cd
     order by RAND() LIMIT 1;
 
     insert into OrderHistory(CreateDate, CustomerPhoneNumber, CustomerName, DeliveryCustomerName, DeliveryPhoneNumber, DeliveryAddress, DeliveryDateTime, Receipt, Price, Comments)
-    select DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL FLOOR(1 + RAND() * 99) DAY), c.PhoneNumber, c.Name, CONCAT('配送用户-', FUNC_GenerateRandomChinese(FLOOR(2 + RAND() * 2))), var_customerDeliveryPhone, var_customerDeliveryAddress, DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL FLOOR(2 + RAND() * 5) DAY),
+    select DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL FLOOR(1 + RAND() * 99) DAY), c.PhoneNumber, c.Name, var_customerDeliveryName, var_customerDeliveryPhone, var_customerDeliveryAddress, DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL FLOOR(2 + RAND() * 5) DAY),
     CONCAT(FUNC_GenerateRandomChinese(FLOOR(10 + RAND() * 10)),';',FUNC_GenerateRandomChinese(FLOOR(4 + RAND() * 4))),
     ROUND(RAND()*1000, 2), FUNC_GenerateRandomChinese(FLOOR(10 + RAND() * 100))
     from Customer c 

@@ -4,6 +4,7 @@ https://docs.microsoft.com/en-us/dotnet/core/extensions/dependency-injection
 # Sample code
 https://cmatskas.com/net-core-dependency-injection-with-constructor-parameters-2/
 
+Dependency Injection Lifetime: Transient, Singleton & Scoped: https://www.tektutorialshub.com/asp-net-core/asp-net-core-dependency-injection-lifetime/
 ```csharp
 using Microsoft.Extensions.DependencyInjection;
 using System;

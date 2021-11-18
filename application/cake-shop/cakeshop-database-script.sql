@@ -59,9 +59,10 @@ create table if not exists CustomerDelivery (
     SysId binary(16) not null unique default(UUID_TO_BIN(UUID())),
     SysDate timestamp not null default CURRENT_TIMESTAMP,
     CustomerSysId binary(16) not null,
+    ContactName varchar(45) not null,
     ContactNumber varchar(11) not null,
     Address varchar(255) not null,
-    Role enum('default','optional'),
+    Role enum('default','optional') not null,
     index idx_usersysid (CustomerSysId)
 )engine=INNODB;
 

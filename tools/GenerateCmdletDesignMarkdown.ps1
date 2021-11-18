@@ -1,7 +1,18 @@
+<#
+.SYNOPSIS
+
+Generate cmdlet design markdown for the specified azure module.
+
+.EXAMPLE
+
+PS> GenerateCmdletDesignMarkdown.ps1 -Path 'azure-powershell\src\Databricks\docs' -OutPath 'azure-powershell\ModuleCmdletDesign' -OutputFileName 'Az.ApplicationInsights.Cmdlet.Design.md' -NounPriority 'AzDatabricksWorkspace','AzDatabricksVNetPeering'
+
+Genereated azure-powershell\ModuleCmdletDesign\Az.ApplicationInsights.Cmdlet.Design.md completed.
+#>
 [CmdletBinding()]
 param (
     [Parameter(Mandatory=$false,
-    HelpMessage="The path is the docs folder path. Default current script path if not pass value"
+    HelpMessage="The path is the docs folder path. Default current script path if not pass value."
     )]
     [string]
     $Path,
@@ -35,7 +46,7 @@ if (!$PSBoundParameters.ContainsKey("OutPath")) {
 
 # Get resource name
 if (!$PSBoundParameters.ContainsKey("OutputFileName")) {
-    $OutputFileName = 'Az.' + (Get-ChildItem -Path $Path -Filter 'Az.*.md' -ErrorAction Stop).Name.Split(".")[1] + '.design.md'
+    $OutputFileName = 'Az.' + (Get-ChildItem -Path $Path -Filter 'Az.*.md' -ErrorAction Stop).Name.Split(".")[1] + 'Cmdlet.Design.md'
 }
 
 # Get all name and path of the cmdlets.
@@ -77,7 +88,7 @@ $sortedCmdlets | Out-String | Write-Debug
 
 $outFilePath = Join-Path $OutPath $OutputFileName
 
-# Try remove out file
+# Try remove output file
 Write-Debug "Delete the $OutputFileName file if it exists."
 Remove-Item -Path $outFilePath -ErrorAction SilentlyContinue
 
