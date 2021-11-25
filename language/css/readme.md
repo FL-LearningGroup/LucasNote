@@ -21,6 +21,7 @@ https://developer.mozilla.org/zh-CN/docs/Learn/CSS
 + 绝对长度
 
 # 动画
+http://www.ruanyifeng.com/blog/2014/02/css_transition_and_animation.html
 
 1. 首先使用@keyframes创建动画规则。
 2. 将动画规则绑定到html元素上。
