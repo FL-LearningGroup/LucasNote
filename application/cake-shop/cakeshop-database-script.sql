@@ -205,3 +205,10 @@ Call PROC_GenerateMockData(200, 500, 1,1);
 select UUID_TO_BIN('7754df52-4041-11ec-9315-00155dab0400');
 
 select DATE_FORMAT(SysDate, '%Y-%m-%d %H:%i:%s') sysdate from User;
+
+SELECT * FROM Goods
+where SysId = uuid_to_bin('836564e0-50e1-11ec-a36a-00155d2d9679');
+
+select bin_to_uuid(GoodsSysId), Type , bin_to_uuid(TargetSysId) from GoodsExtension
+where SysId = uuid_to_bin('9fd0ebc2-50e8-11ec-a36a-00155d2d9679')
+;

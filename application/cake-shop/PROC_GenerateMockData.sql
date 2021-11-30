@@ -8,6 +8,8 @@ declare var_customerSysId binary(16);
 declare var_customerDeliveryName varchar(45);
 declare var_customerDeliveryAddress varchar(255);
 declare var_customerDeliveryPhone varchar(11);
+
+declare var_goodsCategorySysId binary(16);
 declare var_goodsMaxId int unsigned;
 declare var_goodsSysId binary(16);
 declare var_goodsZhName varchar(45);
@@ -165,20 +167,37 @@ CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table Goo
 select MAX(Id) into var_goodsMaxId
 from Goods;
 
+-- Associate Goods and GoodsCategory via GoodsExtension.
+-- Each Goods at least one  GoodsCategory.
+
+CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table GoodsExtension data', in_debug); 
+set var_loopCount = 1;
+while var_loopCount <= var_goodsMaxId do
+
+    Select SysId into var_goodsCategorySysId
+    from GoodsCategory
+    order by RAND() limit 1;
+
+    insert into GoodsExtension(GoodsSysId, Type, TargetSysId) 
+    select SysId, 'Category', var_goodsCategorySysId
+    from Goods 
+    where Id = var_loopCount;
+    set var_loopCount = var_loopCount + 1;
+end while;
+CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table GoodsExtension data completed', in_debug); 
+
 -- Generate Table GoodsSpec
 -- Each goods should has one goods spec;
 
-
-CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table GoodsSpec idata', in_debug);
+CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table GoodsSpec data', in_debug);
 set var_loopCount = 1;
 while var_loopCount <= var_goodsMaxId do
     insert into GoodsSpec(GoodsSysid, Size, Layer, Price, Dinnerware) 
     select SysId , CONCAT(FLOOR(6 + RAND() * 6)), FLOOR(1 + RAND() * 12), ROUND(RAND() * 1000, 2), CONCAT(FLOOR(1 + RAND() * 9),"套餐具")
     from Goods 
     where Id = var_loopCount;
-set var_loopCount = var_loopCount + 1;
+    set var_loopCount = var_loopCount + 1;
 end while;
-
 
 CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table GoodsSpec data - 2', in_debug);
 
@@ -187,31 +206,11 @@ while var_loopCount <= in_goodsCountParam * 3 do
     insert into GoodsSpec(GoodsSysid, Size, Layer, Price, Dinnerware) 
     select SysId , CONCAT(FLOOR(6 + RAND() * 6)), FLOOR(1 + RAND() * 12), ROUND(RAND() * 1000, 2), CONCAT(FLOOR(1 + RAND() * 9),"套餐具")
     from Goods order by RAND() limit 1;
-set var_loopCount = var_loopCount + 1;
+    set var_loopCount = var_loopCount + 1;
 end while;
 
 
-CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table GoodsSpec data completed', in_debug); 
-
--- Generate Table GoodsExtension
-
-
-CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table GoodsExtension idata', in_debug);
-while var_goodsMaxId >= 1 do
-    select SysId, ZhName into var_goodsSysId, var_goodsZhName
-    from Goods g
-    where Id = var_goodsMaxId;
-
-    insert into GoodsExtension(GoodsSysid, Type, TargetSysId)
-    select var_goodsSysId, 'Category', gc.SysId
-    from GoodsCategory gc
-    where gc.ParentSysId is not null and gc.Category = SUBSTRING(var_goodsZhName, 1, 2)
-    order by RAND() LIMIT 1;
-
-    set var_goodsMaxId = var_goodsMaxId - 1;
-end while;
-
-CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table GoodsExtension completed', in_debug); 
+CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table GoodsSpec data completed', in_debug);  
 
 --Generate Table OrderHistory
 --The customer may not has delivery address.
