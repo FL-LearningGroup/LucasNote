@@ -1,4 +1,4 @@
---DROP PROCEDURE IF EXISTS PROC_GenerateMockData;
+DROP PROCEDURE IF EXISTS PROC_GenerateMockData;
 create procedure PROC_GenerateMockData(in in_customerCountParam int, in in_goodsCountParam int, in in_clearMockData int, in in_debug int)
 begin
 declare var_goodsCategoryCount int;
@@ -36,6 +36,7 @@ set var_executeId = UUID();
 -- Clear mock data if the in_clearMockData greater to 0.
 if in_clearMockData then
 CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Clear all mock data va Truncate all table ', in_debug);
+truncate table User;
 truncate table Customer;
 truncate table CustomerBirthday;
 truncate table CustomerDelivery;
@@ -47,8 +48,17 @@ truncate table OrderHistory;
 truncate table OrderGoodsHistory;
 end if;
 
--- Generate Table Customer data
+-- Generate Table User data
+CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate Table User data', in_debug);
+insert into User(Account, Password, Role) values ('admin', 'admin123', 'admin');
+set var_loopCount = 1;
+while var_loopCount <= 20 do
+    insert into User(Account, Password, Role) values (FUNC_GenerateRandomEnglish(FLOOR( 2 + RAND() * 2)), '123', 'user');
+    set var_loopCount = var_loopCount + 1;
+end while;
+CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate Table User data completed', in_debug); 
 
+-- Generate Table Customer data
 CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate Table Customer data', in_debug);
 set var_loopCount = 1;
 while var_loopCount <= in_customerCountParam do
@@ -218,7 +228,7 @@ CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table Goo
 CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate table OrderHistory idata', in_debug); 
 set var_loopCount = 1;
 while var_loopCount <= in_goodsCountParam * 4 do
-    select cd.CustomerSysId, cd.ContactNumber, cd.ContactNumber, cd.Address into var_customerSysId, var_customerDeliveryName, var_customerDeliveryPhone, var_customerDeliveryAddress
+    select cd.CustomerSysId, cd.ContactName, cd.ContactNumber, cd.Address into var_customerSysId, var_customerDeliveryName, var_customerDeliveryPhone, var_customerDeliveryAddress
     from CustomerDelivery cd
     order by RAND() LIMIT 1;
 
