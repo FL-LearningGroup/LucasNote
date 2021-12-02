@@ -56,3 +56,23 @@
 
 **数据是通过Http从服务端获取数据**
 为了之后能平滑的切换，前端应利用接口定义模拟http请求。
+
+# Fetch vs Axios.js
+
+One of the fundamental tasks of any web application is to communicate with servers through the HTTP Protocol.
+
+This can easily achieved using `Fetch` or `Axios.js`.
+
+|Axios | Fetch|
+|:---|:--|
+|Axios has url in request object.	|Fetch has no url in request object.|
+|Axios is a stand-alone third party package that can be easily installed.	|Fetch is built into most modern browsers; no installation is required as such.|
+|Axios enjoys built-in XSRF protection.	|Fetch does not.|
+|Axios uses the data property.	|Fetch uses the body property.|
+|Axios’ data contains the object.	|Fetch’s body has to be stringified.|
+|Axios request is ok when status is 200 and statusText is ‘OK’.	|Fetch request is ok when response object contains the ok property.|
+|Axios performs automatic transforms of JSON data.	|Fetch is a two-step process when handling JSON data- first, to make the actual request; second, to call the .json() method on the response.|
+|Axios allows cancelling request and request timeout.	|Fetch does not.|
+|Axios has the ability to intercept HTTP requests.	|Fetch, by default, doesn’t provide a way to intercept requests.|
+|Axios has built-in support for download progress.	|Fetch does not support upload progress.|
+|Axios has wide browser support.	|Fetch only supports Chrome 42+, Firefox 39+, Edge 14+, and Safari 10.|1+ (This is known as Backward Compatibility).
