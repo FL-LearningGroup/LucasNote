@@ -7,5 +7,5 @@ assignees: ''
 
 ---
 
-- Issue: (url)
-- PR: (url)
+- Issue: url
+- PR: url
