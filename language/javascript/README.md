@@ -32,61 +32,6 @@ https://es6.ruanyifeng.com/#docs/destructuring
 6. undefined: A top-level property whose value is not defined.
 7. Symbol (new in ECMAScript 2015). A data type whose instances are unique and immutable.
 
-### One Customable
-1. Object
-    - Class
-    - function
-
-## Expression and Operations
-
-### Assignment
-+ =
-
-### Addition(+)
-+ (+)
-+ +=
-+ ++
-
-### Subtraction(-)
-+ (-)
-+ -=
-+ --
-
-### Multiplication(*)
-+ (*)
-+ *=
-+ **
-+ **=
-
-### Division(/)
-+ /
-+ /=
-
-### Remainder(%)
-+ %
-+ %=
-
-### Bitwise
-+ & &=
-+ | |=
-+ ~ ~=
-+ ^ ^=
-
-### Shit
-+ left: << <=
-+ right: >> >=
-
-### Logical
-+ == ===
-+ (> >=)
-+ (< >=)
-+ != !==
-+ &&
-+ ||
-+ !
-+ ??
-+ ?:
-
 ## Stream
 
 NodeJs中异步方式的同步编程方案，通过回调函数和事件。
@@ -200,3 +145,51 @@ getJson("https://es6.ruanyifeng.com/posts.json").then(function(json) {
 }).catch()
 ```
 
+# This的指向
+
+https://www.ruanyifeng.com/blog/2018/06/javascript-this.html
+
+This的指向是有调用function的上下文决定的。
+
+For instance:
+```js
+let obj01 = {
+    name: "asim",
+    sayLater: function() {
+        console.log(`${this.name}`);
+    }
+};
+obj01.sayLater(); // this -> obj
+
+let obj02 = {
+    name: "asim",
+    sayLater: function () {
+        setTimeout(function () {
+            console.log(`${this.name}`);
+        }, 1000);
+    }
+};
+obj02.sayLater(); // this ->  Context which call setTimeout. Point Window when execuing in brower.
+
+
+var foo = {
+    arr:[1,2,3],
+    sum:0,
+    testA:function(){
+        this.arr.forEach(function(x){
+            this.sum += x;//this points to Array.forEach instead of foo.
+        });
+        alert(this.sum);//0
+    },
+    testB:function(){
+        this.arr.forEach(x => this.sum+=x);//this points to foo, because use arrow function. 
+        alert(this.sum);//6
+    }
+};
+foo.testA();
+foo.testB();
+```
+
+# 闭包
+
+返回可以访问函数内部变量的函数。
