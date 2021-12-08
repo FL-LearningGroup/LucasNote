@@ -42,3 +42,13 @@ this.setState((prevState) => {
 You can find detailed explanations on how setState works from the [React docs](https://reactjs.org/docs/react-component.html#setstate).
 
 TypeScript在React中使用总结: https://segmentfault.com/a/1190000016526361
+
+## Hook
+
++ 使用Hook可以在无需修改组件结构的情况下复用状态逻辑。
++ 在非class的情况下可以使用更多的React特性。
+
+**使用规则**
+
++ 只能在函数最外层调用`Hook`,不要在循环，条件判断或者子函数中调用。
++ 只能在React的函数组件中或者在自定义Hook中调用Hook。 不要在其他JavaScript函数中调用

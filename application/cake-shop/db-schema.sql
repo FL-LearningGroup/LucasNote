@@ -5,7 +5,7 @@ create table if not exists User (
     SysDate timestamp not null default CURRENT_TIMESTAMP,
     Account varchar(45) not null unique,
     Password varchar(255) not null,
-    Role enum('admin', 'user') not null comment "admin allow to manage goods, user allow to only quer data.",
+    Role enum('Admin', 'User') not null comment "admin allow to manage goods, user allow to only quer data.",
     index idx_account (Account)
 )ENGINE=INNODB;
 

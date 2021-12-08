@@ -50,10 +50,10 @@ end if;
 
 -- Generate Table User data
 CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate Table User data', in_debug);
-insert into User(Account, Password, Role) values ('admin', 'admin123', 'admin');
+insert into User(Account, Password, Role) values ('admin', 'admin123', 'Admin');
 set var_loopCount = 1;
 while var_loopCount <= 20 do
-    insert into User(Account, Password, Role) values (FUNC_GenerateRandomEnglish(FLOOR( 2 + RAND() * 2)), '123', 'user');
+    insert into User(Account, Password, Role) values (FUNC_GenerateRandomEnglish(FLOOR( 2 + RAND() * 2)), '123', 'User');
     set var_loopCount = var_loopCount + 1;
 end while;
 CALL PROC_Dev_SqlExecutedHistory(var_executeId,var_procName, 'Generate Table User data completed', in_debug); 
