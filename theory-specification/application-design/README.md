@@ -1,2 +1,0 @@
-# ApplicationDesign
-Application design docs.

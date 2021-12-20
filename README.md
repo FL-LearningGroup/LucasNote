@@ -17,13 +17,8 @@
 - [application](./application)
     - [cake-shop](./application/cake-shop)
 - [books](./books)
-- [framework](./framework)
-- [infrastructure](./infrastructure)
-- [language](./language)
-- [theory-specification](./theory-specification)
-- [tips](./tips)
+- [computer](./computer)
 - [tools](./tools)
-- [life](./life)
 - [works](./works)
 
 # 互联网发展报告
