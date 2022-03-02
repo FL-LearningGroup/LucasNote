@@ -6,6 +6,9 @@
 
 猜想 --> 论证 --> 理论 --> 形成。
 
+# Knowledge
+![knowledge](./imgs/konwledge.drawio.png)
+
 # 工作阶段性标识
 ![work stage tag](./imgs/work-stage-tag.drawio.png)
 
