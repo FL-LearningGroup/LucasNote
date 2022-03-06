@@ -9,6 +9,9 @@
 # Knowledge
 ![knowledge](./imgs/konwledge.drawio.png)
 
+# Computer Hardware
+![computer hardware](./imgs/computer-hardware.drawio.png)
+
 # 工作阶段性标识
 ![work stage tag](./imgs/work-stage-tag.drawio.png)
 
