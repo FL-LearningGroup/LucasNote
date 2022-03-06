@@ -16,3 +16,4 @@
     + [QEMU](https://www.qemu.org/): A generic and open source machine emulator and virtualizer
         - sudo apt-get install qemu-system: The command will install all system. Includes i386, x86_64, arm and so on.
 + vscode: [windows platform](https://code.visualstudio.com/download)
++ Install [NASM compoler](https://www.nasm.us/) on window
