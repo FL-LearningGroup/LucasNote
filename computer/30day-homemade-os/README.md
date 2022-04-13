@@ -9,6 +9,11 @@
 + 汇编
 + C语言
 
+## CPU
+一个CPU的体系结构有一个指令集加上一些寄存器而组成
+
+![computer-arch](./images/computer-architecture.drawio.png)
+
 ## Environment and Tools
 + Windows 64bit
 + Ubuntu
@@ -16,13 +21,38 @@
     + [QEMU](https://www.qemu.org/): A generic and open source machine emulator and virtualizer
         - sudo apt-get install qemu-system: The command will install all system. Includes i386, x86_64, arm and so on.
 + vscode: [windows platform](https://code.visualstudio.com/download)
-+ Install [NASM compoler](https://www.nasm.us/) on window
++ [nams](https://en.wikipedia.org/wiki/Netwide_Assembler) on Ubuntu
+    ```bash
+    sudo apt update
+    sudo apt install nasm
+    ```
++ make on Ubuntu
+    ```bash
+    sudo apt update
+    sudo apt install make
+    ```
 
+## How to debug assembly?
+Take qemu-system-i386 as example?
+1. Compile assembly code to img file.
+2. Runing `qemu-system-i386 -fda ./hello-os.img -s -S`. This command make os started waiting respone from the gdb.
+3. Runing `target remote localhost:1234` in the gdb.
+4. Make breakpoint and execute contionue.
+    ```txt
+    (gdb) br *0x7c00
+    Breakpoint 1 at 0x7c00
+    (gdb) c
+    Continuing.
+
+    Breakpoint 1, 0x00007c00 in ?? ()
+    (gdb) x/i $eip
+    => 0x7c00:      jmp    0x7c3e
+    ```
 ## 计算机启动流程
 1. 通电，CPU寻址到CS:IP指向的地址(BIOS的地址)
 2. 读取ROM里面的BIOS, 检查硬件。
 3. 硬件检查通过。
-4. BIOS根据指定的顺序，检查引导设备的第一个扇区（即主引导记录），加载内存地址0x7c00.
+4. BIOS根据指定的顺序，检查引导设备的第一个扇区（即主引导记录，自动加载第一个扇区并且加载到内存地址0x7c00.
 5. 主引导记录把操作权交给操作系统。
 
 **参考文档**
@@ -60,3 +90,20 @@ CPU 优先读写寄存器，再由寄存器跟内存交换数据。
 
 ## 内存模型
 Stack, Heap
+
+# Embedded assembly in C
+
+using [GCC](http://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html)
+```c
+__asm__(
+    "movl %edx, %eax\n\t"
+    "addl $2, "%eax\n\t"
+);
+``` 
+using VC++
+```c
+__asm {
+    mov eax, edx
+    add eax, 2
+}
+```

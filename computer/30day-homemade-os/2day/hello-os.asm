@@ -2,10 +2,9 @@
 ; TAB=4
 
 	ORG		0x7c00	;指明程序装载地址
-
-; 标准FAT12格式软盘专用的代码
-
 	JMP		entry
+
+	; 标准FAT12格式软盘专用的代码(软盘重新下载code时使用)
 	DB 		0x90
 	DB		"HELLOIPL"		;启动扇区名称（8字节）
 	DW		512		;每个扇区（sector）大小（必须512字节）
@@ -24,12 +23,11 @@
 	DD		0xffffffff	;???
 	DB		"HELO-OS    "		;磁盘的名称（必须为11字节，不足填空格）
 	DB		"FAT12   " 		;磁盘格式名称（必须是8字节，不足填空格）
-	RESB 	18		; 先空出18字节???
-
+	; RESB 	18		; 先空出18字节??? not work
+	TIMES	18 DB 0x00				; 先空出18字节
 ; 程序主体
-
 entry:
-	MOV		AZ, 0		; 初始化寄存器
+	MOV		AX, 0		; 初始化寄存器
 	MOV		SS,AX
 	MOV		SP,0x7c00
 	MOV		DS,AX
@@ -54,15 +52,9 @@ fin:
 msg:
 	DB		0x0a, 0x0a		;换行两次
 	DB		"hello, world"
-	DB 		Ox0a			;换行
+	DB 		0x0a			;换行
 	DB		0
 
-	RESB	0x7dfe-$		; 填写0x00直到0x001fe
+	;RESB	0x1fe-$		; not work		
+	TIMES    510-($-$$) DB 0x00 ; 填写0x00直到0x1fe(512byte = 0x200)
 	DB		0x55, 0xaa
-
-; 启动扇区以外部分输出
-
-	DB		0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-	RESB    4600
-	DB		0xf0, 0xff, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00
-	RESB    1469432
