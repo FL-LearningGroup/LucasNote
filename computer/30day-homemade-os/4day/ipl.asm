@@ -1,7 +1,7 @@
 ; haribote-ipl
 ; TAB=4
 
-    CYLS	EQU		18		; 声明CYLS=10类似于#define CYLS 10， 设置加载10个柱面，一张软盘有80个柱面，2个磁头，18个扇区，且一个扇区有512个字节。
+    CYLS	EQU		10		; 声明CYLS=10类似于#define CYLS 10， 设置加载10个柱面，一张软盘有80个柱面，2个磁头，18个扇区，且一个扇区有512个字节。
     ORG		0x7c00			; 指明程序装载地址,ref(http://www.ruanyifeng.com/blog/2015/09/0x7c00.html)
 
 ; 标准FAT12格式软盘专用的代码 Stand FAT12 format floppy code
@@ -35,7 +35,7 @@ entry:
     MOV     SS,AX   
     MOV     SP,0x7c00 ; 设置栈区间栈的最大地址为0x7c00
     MOV     DS,AX   ;  设置DS=0，可以直接使用[adress]代表地址。Address = DS x 16 + [number] => Address = [number]
-    MOV     AX,0x0820    
+    MOV     AX,0x820    
     MOV     ES,AX   ; 设置磁盘缓冲区地址，也就是我们要把从软盘读出的数据装载到内存的位置。ES x 16 + BX=0x8200
     MOV     CH,0    ;柱面0
     MOV     DH,0    ;磁头0
@@ -75,7 +75,7 @@ next:
     JB      readloop
     ;跳转到sysinit
     MOV     [0x0ff0],CH
-    JMP     0x8200
+    JMP     0xc200
 
 error:
     MOV     SI,errormsg

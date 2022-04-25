@@ -1,7 +1,7 @@
 ; haribote-os boot asm
 ; TAB=4
 
-BOTPAK	EQU		0x00008330		; 加载bootpack
+BOTPAK	EQU		0x00280000		; 加载bootpack
 DSKCAC	EQU		0x00100000		; 磁盘缓存的位置
 DSKCAC0	EQU		0x00008000		; 磁盘缓存的位置（实模式）
 
@@ -14,7 +14,7 @@ SCRNY	EQU		0x0ff6			; 分辨率Y
 VRAM	EQU		0x0ff8			; 图像缓冲区的起始地址
 
 		ORG		0x8200			;  这个的程序要被装载的内存地址
-
+		TIMES	16384 DB 0x00
 ; 画面モードを設定
 
 		MOV		AL,0x13			; VGA显卡，320x200x8bit
@@ -24,17 +24,6 @@ VRAM	EQU		0x0ff8			; 图像缓冲区的起始地址
 		MOV		WORD [SCRNX],320
 		MOV		WORD [SCRNY],200
 		MOV		DWORD [VRAM],0x000a0000
-; 将屏幕变白 
-; 		MOV		BX, DS
-; 		MOV		AX, 0xa000
-; 		MOV		DS, AX
-; 		MOV		SI, 0
-; draw:
-; 		MOV		[SI], BYTE 15
-; 		ADD		SI, 1
-; 		CMP		SI, 320*200
-; 		JBE		draw
-; 		MOV		DS, BX
 
 ; 通过BIOS获取指示灯状态
 
@@ -66,7 +55,7 @@ VRAM	EQU		0x0ff8			; 图像缓冲区的起始地址
 
 ; 保护模式转换
 
-;[INSTRSET "i486p"]		; 说明使用486指令
+;[INSTRSET "i486p"]				; 说明使用486指令
 
 		LGDT	[GDTR0]			; 设置临时GDT
 		MOV		EAX,CR0
@@ -82,7 +71,7 @@ pipelineflush:
 		MOV		GS,AX
 		MOV		SS,AX
 
-; bootpack传递
+; 将bootpack复制到0x00280000
 
 		MOV		ESI,bootpack	; 源
 		MOV		EDI,BOTPAK		; 目标
@@ -91,14 +80,14 @@ pipelineflush:
 
 ; 传输磁盘数据
 
-; 从引导区开始
+; 复制引导区0x7c00复制到0x00100000
 
 		MOV		ESI,0x7c00		; 源
 		MOV		EDI,DSKCAC		; 目标
 		MOV		ECX,512/4
 		CALL	memcpy
 
-; 剩余的全部
+; 将始于0x00008200的磁盘内容复制到0x00100200
 
 		MOV		ESI,DSKCAC0+512	; 源
 		MOV		EDI,DSKCAC+512	; 目标
@@ -113,18 +102,19 @@ pipelineflush:
 
 ; bootpack启动
 
-		MOV		EBX,BOTPAK
-		MOV		ECX,[EBX+16]
-		ADD		ECX,3			; ECX += 3;
-		SHR		ECX,2			; ECX /= 4;
-		JZ		skip			; 传输完成
-		MOV		ESI,[EBX+20]	; 源
-		ADD		ESI,EBX
-		MOV		EDI,[EBX+12]	; 目标
-		CALL	memcpy
-skip:
-		MOV		ESP,[EBX+12]	; 堆栈的初始化
-		JMP		DWORD 2*8:0x0000001b
+; 		MOV		EBX,BOTPAK
+; 		MOV		ECX,[EBX+16]
+; 		ADD		ECX,3			; ECX += 3;
+; 		SHR		ECX,2			; ECX /= 4;
+; 		JZ		skip			; 传输完成
+; 		MOV		ESI,[EBX+20]	; 源
+; 		ADD		ESI,EBX
+; 		MOV		EDI,[EBX+12]	; 目标
+; 		CALL	memcpy
+; skip:
+; 		MOV		ESP,[EBX+12]	; 堆栈的初始化
+; 		JMP		DWORD 2*8:0x0000001b
+		JMP		DWORD 2*8:0x0
 
 waitkbdout:
 		IN		 AL,0x64
@@ -142,9 +132,9 @@ memcpy:
 		RET
 ; memcpy地址前缀大小
 
-		ALIGNB 16, DB 0
+		ALIGNB	16, DB 0
 GDT0:
-		TIMES	8 DB 0				; 初始值
+		RESB	8				; 初始值
 		DW		0xffff,0x0000,0x9200,0x00cf	; 写32bit位段寄存器
 		DW		0xffff,0x0000,0x9a28,0x0047	; 可执行的文件的32bit寄存器（bootpack用）
 

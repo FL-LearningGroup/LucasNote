@@ -1,7 +1,7 @@
      1                                  ; haribote-ipl
      2                                  ; TAB=4
      3                                  
-     4                                      CYLS	EQU		18		; 声明CYLS=10类似于#define CYLS 10， 设置加载10个柱面，一张软盘有80个柱面，2个磁头，18个扇区，且一个扇区有512个字节。
+     4                                      CYLS	EQU		10		; 声明CYLS=10类似于#define CYLS 10， 设置加载10个柱面，一张软盘有80个柱面，2个磁头，18个扇区，且一个扇区有512个字节。
      5                                      ORG		0x7c00			; 指明程序装载地址,ref(http://www.ruanyifeng.com/blog/2015/09/0x7c00.html)
      6                                  
      7                                  ; 标准FAT12格式软盘专用的代码 Stand FAT12 format floppy code
@@ -36,7 +36,7 @@
     35 00000056 8ED0                        MOV     SS,AX   
     36 00000058 BC007C                      MOV     SP,0x7c00 ; 设置栈区间栈的最大地址为0x7c00
     37 0000005B 8ED8                        MOV     DS,AX   ;  设置DS=0，可以直接使用[adress]代表地址。Address = DS x 16 + [number] => Address = [number]
-    38 0000005D B82008                      MOV     AX,0x0820    
+    38 0000005D B82008                      MOV     AX,0x820    
     39 00000060 8EC0                        MOV     ES,AX   ; 设置磁盘缓冲区地址，也就是我们要把从软盘读出的数据装载到内存的位置。ES x 16 + BX=0x8200
     40 00000062 B500                        MOV     CH,0    ;柱面0
     41 00000064 B600                        MOV     DH,0    ;磁头0
@@ -72,11 +72,11 @@
     71 0000009F 72C7                        JB      readloop
     72 000000A1 B600                        MOV     DH,0
     73 000000A3 80C501                      ADD     CH,1
-    74 000000A6 80FD12                      CMP     CH,CYLS
+    74 000000A6 80FD0A                      CMP     CH,CYLS
     75 000000A9 72BD                        JB      readloop
     76                                      ;跳转到sysinit
     77 000000AB 882EF00F                    MOV     [0x0ff0],CH
-    78 000000AF E9(0082)                    JMP     0x8200
+    78 000000AF E9(00C2)                    JMP     0xc200
     79                                  
     80                                  error:
     81 000000B2 BE[CA00]                    MOV     SI,errormsg

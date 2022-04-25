@@ -25,18 +25,6 @@ VRAM	EQU		0x0ff8			; 图像缓冲区的起始地址
 		MOV		WORD [SCRNY],200
 		MOV		DWORD [VRAM],0x000a0000
 
-; 将屏幕变白 
-; 		MOV		BX, DS
-; 		MOV		AX, 0xa000
-; 		MOV		DS, AX
-; 		MOV		SI, 0
-; draw:
-; 		MOV		[SI], BYTE 15
-; 		ADD		SI, 1
-; 		CMP		SI, 320*200
-; 		JBE		draw
-; 		MOV		DS, BX
-
 ; 通过BIOS获取指示灯状态
 
 		MOV		AH,0x02
@@ -67,7 +55,7 @@ VRAM	EQU		0x0ff8			; 图像缓冲区的起始地址
 
 ; 保护模式转换
 
-;[INSTRSET "i486p"]		; 说明使用486指令
+;[INSTRSET "i486p"]				; 说明使用486指令
 
 		LGDT	[GDTR0]			; 设置临时GDT
 		MOV		EAX,CR0
@@ -143,9 +131,9 @@ memcpy:
 		RET
 ; memcpy地址前缀大小
 
-		ALIGNB 16, DB 0
+		ALIGNB	16, DB 0
 GDT0:
-		TIMES	8 DB 0				; 初始值
+		RESB	8				; 初始值
 		DW		0xffff,0x0000,0x9200,0x00cf	; 写32bit位段寄存器
 		DW		0xffff,0x0000,0x9a28,0x0047	; 可执行的文件的32bit寄存器（bootpack用）
 

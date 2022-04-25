@@ -27,7 +27,16 @@ haribote.img: ipl.bin haribote.sys Makefile
 	cat ipl.bin haribote.sys > haribote.img
 	qemu-img resize -f raw haribote.img 1474560
 
+softdisk:
+	make clean
+	make ipl.bin
+	make asmhead.bin
+	make nasmfunc.o
+	make bootpack.hrb
+	cat ipl.bin asmhead.bin bootpack.hrb > softdisk.img
+
 compile:
+	make clean
 	make ipl.bin
 	make asmhead.bin
 	make nasmfunc.o
