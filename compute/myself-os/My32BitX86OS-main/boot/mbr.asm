@@ -2,7 +2,7 @@
 KERNEL_OFFSET equ 0x1000 ; The same one we used when linking the kernel
 
 mov [BOOT_DRIVE], dl ; Remember that the BIOS sets us the boot drive in 'dl' on boot
-mov bp, 0x9000
+mov bp, 0x9000 ; Stack Top point.
 mov sp, bp
 
 mov bx, MSG_16BIT_MODE

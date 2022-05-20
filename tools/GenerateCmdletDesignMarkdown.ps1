@@ -31,7 +31,12 @@ param (
     [Parameter(Mandatory=$false,
     HelpMessage="Specify the order of cmdlets in the design document.")]
     [string[]]
-    $NounPriority
+    $NounPriority,
+
+    [Parameter(Mandatory=$false,
+    HelpMessage="Specify the order of cmdlets in the design document.")]
+    [switch]
+    $Csv
 )
 
 try  {
@@ -81,6 +86,14 @@ for($index=0; $index -lt $cmdLets.Length; $index++) {
 
 
 $sortedCmdlets = $cmdLets | Sort-Object -Property @{Expression = "Noun"; Descending = $false},@{Expression = "Verb"; Descending = $false}
+
+if ($Csv)
+{
+    $csvFile = 'Az.' + (Get-ChildItem -Path $Path -Filter 'Az.*.md' -ErrorAction Stop).Name.Split(".")[1] + '.csv'
+    Write-Host "Generate $csvFile"
+    Remove-Item -Path $csvFile -ErrorAction SilentlyContinue
+    $sortedCmdlets | Select-Object -Property Cmdlet | Export-Csv -Path $csvFile
+}
 
 "The sorted cmdles list : " | Write-Debug
 $sortedCmdlets | Out-String | Write-Debug
