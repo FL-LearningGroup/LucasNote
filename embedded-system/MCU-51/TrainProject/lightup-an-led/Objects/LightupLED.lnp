@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\main.obj" 
+TO ".\Objects\LightupLED" 
+PRINT(".\Listings\LightupLED.m51") RAMSIZE(256) 
