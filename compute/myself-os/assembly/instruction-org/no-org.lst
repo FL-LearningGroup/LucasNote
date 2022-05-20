@@ -1,0 +1,20 @@
+     1 00000000 EB11                    jmp     start
+     2 00000002 77656C636F6D65204C-     welcome: db 'welcome Lucas OS', '$'
+     2 0000000B 75636173204F5324   
+     3                                  
+     4                                  start:
+     5 00000013 BE[0200]                    mov si, welcome
+     6 00000016 E80100                      call printstr
+     7 00000019 C3                          ret
+     8                                  
+     9                                  printstr:
+    10 0000001A 8A04                        mov al, [si]
+    11 0000001C 3C24                        cmp al, '$'
+    12 0000001E 7407                        je disover
+    13 00000020 B40E                        mov ah, 0eh
+    14 00000022 CD10                        int 10h
+    15 00000024 46                          inc si
+    16 00000025 EBF3                        jmp printstr
+    17                                  
+    18                                  disover:
+    19 00000027 C3                          ret

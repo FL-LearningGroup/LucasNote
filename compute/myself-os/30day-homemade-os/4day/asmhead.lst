@@ -1,0 +1,148 @@
+     1                                  ; haribote-os boot asm
+     2                                  ; TAB=4
+     3                                  
+     4                                  BOTPAK	EQU		0x00280000		; 加载bootpack
+     5                                  DSKCAC	EQU		0x00100000		; 磁盘缓存的位置
+     6                                  DSKCAC0	EQU		0x00008000		; 磁盘缓存的位置（实模式）
+     7                                  
+     8                                  ; BOOT_INFO相关
+     9                                  CYLS	EQU		0x0ff0			; 引导扇区设置
+    10                                  LEDS	EQU		0x0ff1
+    11                                  VMODE	EQU		0x0ff2			; 关于颜色的信息
+    12                                  SCRNX	EQU		0x0ff4			; 分辨率X
+    13                                  SCRNY	EQU		0x0ff6			; 分辨率Y
+    14                                  VRAM	EQU		0x0ff8			; 图像缓冲区的起始地址
+    15                                  
+    16                                  		ORG		0x8200			;  这个的程序要被装载的内存地址
+    17 00000000 00<rept>                		TIMES	16384 DB 0x00
+    18                                  ; 画面モードを設定
+    19                                  
+    20 00004000 B013                    		MOV		AL,0x13			; VGA显卡，320x200x8bit
+    21 00004002 B400                    		MOV		AH,0x00
+    22 00004004 CD10                    		INT		0x10
+    23 00004006 C606F20F08              		MOV		BYTE [VMODE],8	; 屏幕的模式（参考C语言的引用）
+    24 0000400B C706F40F4001            		MOV		WORD [SCRNX],320
+    25 00004011 C706F60FC800            		MOV		WORD [SCRNY],200
+    26 00004017 66C706F80F00000A00      		MOV		DWORD [VRAM],0x000a0000
+    27                                  
+    28                                  ; 通过BIOS获取指示灯状态
+    29                                  
+    30 00004020 B402                    		MOV		AH,0x02
+    31 00004022 CD16                    		INT		0x16 			; keyboard BIOS
+    32 00004024 A2F10F                  		MOV		[LEDS],AL
+    33                                  
+    34                                  ; 防止PIC接受所有中断
+    35                                  ;	AT兼容机的规范、PIC初始化
+    36                                  ;	然后之前在CLI不做任何事就挂起
+    37                                  ;	PIC在同意后初始化
+    38                                  
+    39 00004027 B0FF                    		MOV		AL,0xff
+    40 00004029 E621                    		OUT		0x21,AL
+    41 0000402B 90                      		NOP						; 不断执行OUT指令
+    42 0000402C E6A1                    		OUT		0xa1,AL
+    43                                  
+    44 0000402E FA                      		CLI						; 进一步中断CPU
+    45                                  
+    46                                  ; 让CPU支持1M以上内存、设置A20GATE
+    47                                  
+    48 0000402F E88B00                  		CALL	waitkbdout
+    49 00004032 B0D1                    		MOV		AL,0xd1
+    50 00004034 E664                    		OUT		0x64,AL
+    51 00004036 E88400                  		CALL	waitkbdout
+    52 00004039 B0DF                    		MOV		AL,0xdf			; enable A20
+    53 0000403B E660                    		OUT		0x60,AL
+    54 0000403D E87D00                  		CALL	waitkbdout
+    55                                  
+    56                                  ; 保护模式转换
+    57                                  
+    58                                  ;[INSTRSET "i486p"]				; 说明使用486指令
+    59                                  
+    60 00004040 0F0116[FA40]            		LGDT	[GDTR0]			; 设置临时GDT
+    61 00004045 0F20C0                  		MOV		EAX,CR0
+    62 00004048 6625FFFFFF7F            		AND		EAX,0x7fffffff	; 使用bit31（禁用分页）
+    63 0000404E 6683C801                		OR		EAX,0x00000001	; bit0到1转换（保护模式过渡）
+    64 00004052 0F22C0                  		MOV		CR0,EAX
+    65 00004055 EB00                    		JMP		pipelineflush
+    66                                  pipelineflush:
+    67 00004057 B80800                  		MOV		AX,1*8			;  写32bit的段
+    68 0000405A 8ED8                    		MOV		DS,AX
+    69 0000405C 8EC0                    		MOV		ES,AX
+    70 0000405E 8EE0                    		MOV		FS,AX
+    71 00004060 8EE8                    		MOV		GS,AX
+    72 00004062 8ED0                    		MOV		SS,AX
+    73                                  
+    74                                  ; 将bootpack复制到0x00280000
+    75                                  
+    76 00004064 66BE[00410000]          		MOV		ESI,bootpack	; 源
+    77 0000406A 66BF00002800            		MOV		EDI,BOTPAK		; 目标
+    78 00004070 66B900000200            		MOV		ECX,512*1024/4
+    79 00004076 E84B00                  		CALL	memcpy
+    80                                  
+    81                                  ; 传输磁盘数据
+    82                                  
+    83                                  ; 复制引导区0x7c00复制到0x00100000
+    84                                  
+    85 00004079 66BE007C0000            		MOV		ESI,0x7c00		; 源
+    86 0000407F 66BF00001000            		MOV		EDI,DSKCAC		; 目标
+    87 00004085 66B980000000            		MOV		ECX,512/4
+    88 0000408B E83600                  		CALL	memcpy
+    89                                  
+    90                                  ; 将始于0x00008200的磁盘内容复制到0x00100200
+    91                                  
+    92 0000408E 66BE00820000            		MOV		ESI,DSKCAC0+512	; 源
+    93 00004094 66BF00021000            		MOV		EDI,DSKCAC+512	; 目标
+    94 0000409A 66B900000000            		MOV		ECX,0
+    95 000040A0 8A0EF00F                		MOV		CL,BYTE [CYLS]
+    96 000040A4 6669C900120000          		IMUL	ECX,512*18*2/4	; 除以4得到字节数
+    97 000040AB 6681E980000000          		SUB		ECX,512/4		; IPL偏移量
+    98 000040B2 E80F00                  		CALL	memcpy
+    99                                  
+   100                                  ; 由于还需要asmhead才能完成
+   101                                  ; 完成其余的bootpack任务
+   102                                  
+   103                                  ; bootpack启动
+   104                                  
+   105                                  ; 		MOV		EBX,BOTPAK
+   106                                  ; 		MOV		ECX,[EBX+16]
+   107                                  ; 		ADD		ECX,3			; ECX += 3;
+   108                                  ; 		SHR		ECX,2			; ECX /= 4;
+   109                                  ; 		JZ		skip			; 传输完成
+   110                                  ; 		MOV		ESI,[EBX+20]	; 源
+   111                                  ; 		ADD		ESI,EBX
+   112                                  ; 		MOV		EDI,[EBX+12]	; 目标
+   113                                  ; 		CALL	memcpy
+   114                                  ; skip:
+   115                                  ; 		MOV		ESP,[EBX+12]	; 堆栈的初始化
+   116                                  ; 		JMP		DWORD 2*8:0x0000001b
+   117 000040B5 66EA000000001000        		JMP		DWORD 2*8:0x0
+   118                                  
+   119                                  waitkbdout:
+   120 000040BD E464                    		IN		 AL,0x64
+   121 000040BF 2402                    		AND		 AL,0x02
+   122 000040C1 75FA                    		JNZ		waitkbdout		; AND结果不为0跳转到waitkbdout
+   123 000040C3 C3                      		RET
+   124                                  
+   125                                  memcpy:
+   126 000040C4 66678B06                		MOV		EAX,[ESI]
+   127 000040C8 6683C604                		ADD		ESI,4
+   128 000040CC 66678907                		MOV		[EDI],EAX
+   129 000040D0 6683C704                		ADD		EDI,4
+   130 000040D4 6683E901                		SUB		ECX,1
+   131 000040D8 75EA                    		JNZ		memcpy			; 运算结果不为0跳转到memcpy
+   132 000040DA C3                      		RET
+   133                                  ; memcpy地址前缀大小
+   134                                  
+   135 000040DB 00<rept>                		ALIGNB	16, DB 0
+   136                                  GDT0:
+   137 000040E0 <res 00000008>          		RESB	8				; 初始值
+   137          ******************       warning: uninitialized space declared in .text section: zeroing [-w+other]
+   138 000040E8 FFFF00000092CF00        		DW		0xffff,0x0000,0x9200,0x00cf	; 写32bit位段寄存器
+   139 000040F0 FFFF0000289A4700        		DW		0xffff,0x0000,0x9a28,0x0047	; 可执行的文件的32bit寄存器（bootpack用）
+   140                                  
+   141 000040F8 0000                    		DW		0
+   142                                  GDTR0:
+   143 000040FA 1700                    		DW		8*3-1
+   144 000040FC [E0400000]              		DD		GDT0
+   145                                  
+   146                                  		ALIGNB 16, DB 0
+   147                                  bootpack:
