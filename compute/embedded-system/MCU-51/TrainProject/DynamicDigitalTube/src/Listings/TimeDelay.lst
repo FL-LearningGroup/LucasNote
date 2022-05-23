@@ -1,0 +1,41 @@
+C51 COMPILER V9.54   TIMEDELAY                                                             05/23/2022 08:48:23 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE TIMEDELAY
+OBJECT MODULE PLACED IN .\Objects\TimeDelay.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE TimeDelay.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\T
+                    -imeDelay.lst) TABS(2) OBJECT(.\Objects\TimeDelay.obj)
+
+line level    source
+
+   1          #include <INTRINS.H>
+   2          #include "TimeDelay.h"
+   3          
+   4          void Delay1ms_12MHz(unsigned int xms)   //@12.000MHz
+   5          {
+   6   1        do 
+   7   1        {
+   8   2          unsigned char i, j;
+   9   2      
+  10   2          i = 12;
+  11   2          j = 169;
+  12   2          do
+  13   2          {
+  14   3            while (--j);
+  15   3          } while (--i);
+  16   2        }while (--xms);
+  17   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     22    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
