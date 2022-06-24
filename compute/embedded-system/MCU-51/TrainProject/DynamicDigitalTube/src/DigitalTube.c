@@ -63,6 +63,12 @@ void clearDigitalTube()
 	DigitalTubeSegment = 0x00;
 }
 
+void initialization()
+{
+	DigitalTubeDecDigit[0]();
+	DigitalTubeSegment = ARABIC_NUMBER[0];
+}
+
 void DigitalTubeTest()
 {
 	unsigned int i;

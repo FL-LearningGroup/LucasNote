@@ -1,9 +1,10 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        05/23/2022  08:48:23  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/23/2022  15:12:39  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
-D:\KEIL5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\main.obj, .\Objects\TimeDelay.obj, .\Objects\DigitalTube.obj 
->> TO .\Objects\DynamicDigitalTube PRINT (.\Listings\DynamicDigitalTube.m51) RAMSIZE (256)
+D:\KEIL5\C51\BIN\BL51.EXE .\Objects\STARTUP.obj, .\Objects\main.obj, .\Objects\TimeDelay.obj, .\Objects\DigitalTube.obj,
+>>  .\Objects\NumberOperator.obj TO .\Objects\DynamicDigitalTube PRINT (.\Listings\DynamicDigitalTube.m51) RAMSIZE (256)
+>> 
 
 
 MEMORY MODEL: SMALL
@@ -14,7 +15,10 @@ INPUT MODULES INCLUDED:
   .\Objects\main.obj (MAIN)
   .\Objects\TimeDelay.obj (TIMEDELAY)
   .\Objects\DigitalTube.obj (DIGITALTUBE)
+  .\Objects\NumberOperator.obj (NUMBEROPERATOR)
   D:\KEIL5\C51\LIB\C51S.LIB (?C_INIT)
+  D:\KEIL5\C51\LIB\C51S.LIB (?C?COPY)
+  D:\KEIL5\C51\LIB\C51S.LIB (?C?UIDIV)
   D:\KEIL5\C51\LIB\C51S.LIB (?C?ICALL)
 
 
@@ -26,29 +30,36 @@ LINK MAP OF MODULE:  .\Objects\DynamicDigitalTube (?C_STARTUP)
 
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
-            DATA    0008H     0022H     UNIT         ?DT?MAIN
-            DATA    002AH     0022H     UNIT         ?DT?DIGITALTUBE
-            DATA    004CH     0004H     UNIT         ?DT?DIGITALTUBETEST?DIGITALTUBE
-            DATA    0050H     0002H     UNIT         ?DT?_DELAY1MS_12MHZ?TIMEDELAY
-            IDATA   0052H     0001H     UNIT         ?STACK
+            DATA    0008H     0024H     UNIT         ?DT?MAIN
+            DATA    002CH     0022H     UNIT         ?DT?DIGITALTUBE
+            DATA    004EH     000EH     UNIT         ?DT?_SPLITNUMBER?NUMBEROPERATOR
+            DATA    005CH     0004H     UNIT         ?DT?DIGITALTUBETEST?DIGITALTUBE
+            DATA    0060H     0002H     UNIT         ?DT?_DELAY1MS_12MHZ?TIMEDELAY
+            IDATA   0062H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
-            CODE    008FH     0067H     UNIT         ?PR?DIGITALTUBETEST?DIGITALTUBE
-            CODE    00F6H     004DH     UNIT         ?C_INITSEG
-            CODE    0143H     0016H     UNIT         ?PR?_DELAY1MS_12MHZ?TIMEDELAY
-            CODE    0159H     000BH     UNIT         ?PR?CLEARDIGITALTUBE?DIGITALTUBE
-            CODE    0164H     0007H     UNIT         ?PR?SETSINGLEDIGIT?DIGITALTUBE
-            CODE    016BH     0007H     UNIT         ?PR?SETTENDIGIT?DIGITALTUBE
-            CODE    0172H     0007H     UNIT         ?PR?SETHUNDREDDIGIT?DIGITALTUBE
-            CODE    0179H     0007H     UNIT         ?PR?SETTHOUSANDDIGIT?DIGITALTUBE
-            CODE    0180H     0007H     UNIT         ?PR?SETTENTHOUSANDDIGIT?DIGITALTUBE
-            CODE    0187H     0007H     UNIT         ?PR?SETHUNDREDTHOUSANDDIGIT?DIGITALTUBE
-            CODE    018EH     0007H     UNIT         ?PR?SETMILLIONDIGIT?DIGITALTUBE
-            CODE    0195H     0007H     UNIT         ?PR?SETTENMILLIONDIGIT?DIGITALTUBE
-            CODE    019CH     0006H     UNIT         ?C?LIB_CODE
-            CODE    01A2H     0001H     UNIT         ?PR?MAIN?MAIN
+            CODE    0003H     0151H     UNIT         ?C?LIB_CODE
+            CODE    0154H     008CH     UNIT         ?C_C51STARTUP
+            CODE    01E0H     0067H     UNIT         ?PR?DIGITALTUBETEST?DIGITALTUBE
+            CODE    0247H     0065H     UNIT         ?PR?_SPLITNUMBER?NUMBEROPERATOR
+            CODE    02ACH     0051H     UNIT         ?C_INITSEG
+            CODE    02FDH     0016H     UNIT         ?PR?_DELAY1MS_12MHZ?TIMEDELAY
+            CODE    0313H     000BH     UNIT         ?PR?CLEARDIGITALTUBE?DIGITALTUBE
+            CODE    031EH     000BH     UNIT         ?PR?INITIALIZATION?DIGITALTUBE
+            CODE    0329H     0008H     UNIT         ?CO?NUMBEROPERATOR
+            CODE    0331H     0007H     UNIT         ?PR?SETSINGLEDIGIT?DIGITALTUBE
+            CODE    0338H     0007H     UNIT         ?PR?SETTENDIGIT?DIGITALTUBE
+            CODE    033FH     0007H     UNIT         ?PR?SETHUNDREDDIGIT?DIGITALTUBE
+            CODE    0346H     0007H     UNIT         ?PR?SETTHOUSANDDIGIT?DIGITALTUBE
+            CODE    034DH     0007H     UNIT         ?PR?SETTENTHOUSANDDIGIT?DIGITALTUBE
+            CODE    0354H     0007H     UNIT         ?PR?SETHUNDREDTHOUSANDDIGIT?DIGITALTUBE
+            CODE    035BH     0007H     UNIT         ?PR?SETMILLIONDIGIT?DIGITALTUBE
+            CODE    0362H     0007H     UNIT         ?PR?SETTENMILLIONDIGIT?DIGITALTUBE
+            CODE    0369H     0001H     UNIT         ?PR?MAIN?MAIN
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/23/2022  15:12:39  PAGE 2
 
 
 
@@ -59,9 +70,6 @@ SEGMENT
   +--> CALLED SEGMENT
 ---------------------
 ?C_C51STARTUP
-BL51 BANKED LINKER/LOCATER V6.22                                                      05/23/2022  08:48:23  PAGE 2
-
-
   +--> ?PR?MAIN?MAIN
   +--> ?C_INITSEG
 
@@ -83,8 +91,8 @@ SYMBOL TABLE OF MODULE:  .\Objects\DynamicDigitalTube (?C_STARTUP)
   ----------------------------------
 
   -------         MODULE        ?C_STARTUP
-  C:0003H         SEGMENT       ?C_C51STARTUP
-  I:0052H         SEGMENT       ?STACK
+  C:0154H         SEGMENT       ?C_C51STARTUP
+  I:0062H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
   D:00F0H         SYMBOL        B
@@ -93,7 +101,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\DynamicDigitalTube (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:0006H         SYMBOL        IDATALOOP
+  C:0157H         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
   N:0100H         SYMBOL        PBPSTACKTOP
   N:0000H         SYMBOL        PDATALEN
@@ -102,183 +110,244 @@ SYMBOL TABLE OF MODULE:  .\Objects\DynamicDigitalTube (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:0003H         SYMBOL        STARTUP1
+  C:0154H         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         126
-  C:0003H         LINE#         133
-  C:0005H         LINE#         134
-  C:0006H         LINE#         135
-  C:0007H         LINE#         136
-  C:0009H         LINE#         185
-  C:000CH         LINE#         196
+  C:0154H         LINE#         133
+  C:0156H         LINE#         134
+  C:0157H         LINE#         135
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/23/2022  15:12:39  PAGE 3
+
+
+  C:0158H         LINE#         136
+  C:015AH         LINE#         185
+  C:015DH         LINE#         196
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        MAIN
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:01A2H         PUBLIC        main
-BL51 BANKED LINKER/LOCATER V6.22                                                      05/23/2022  08:48:23  PAGE 3
-
-
-  D:0008H         SYMBOL        ARABIC_NUMBER
-  D:0012H         SYMBOL        DigitalTubeDecDigit
+  D:0008H         PUBLIC        countNumber
+  C:0369H         PUBLIC        main
+  D:000AH         SYMBOL        ARABIC_NUMBER
+  D:0014H         SYMBOL        DigitalTubeDecDigit
   -------         PROC          MAIN
-  C:01A2H         LINE#         3
-  C:01A2H         LINE#         4
-  C:01A2H         LINE#         5
+  C:0369H         LINE#         7
+  C:0369H         LINE#         8
+  C:0369H         LINE#         10
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
   -------         MODULE        TIMEDELAY
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0143H         PUBLIC        _Delay1ms_12MHz
+  C:02FDH         PUBLIC        _Delay1ms_12MHz
   -------         PROC          _DELAY1MS_12MHZ
   D:0006H         SYMBOL        xms
   -------         DO            
-  D:0050H         SYMBOL        i
-  D:0051H         SYMBOL        j
+  D:0060H         SYMBOL        i
+  D:0061H         SYMBOL        j
   -------         ENDDO         
-  C:0143H         LINE#         4
-  C:0143H         LINE#         5
-  C:0143H         LINE#         7
-  C:0143H         LINE#         10
-  C:0146H         LINE#         11
-  C:0149H         LINE#         13
-  C:0149H         LINE#         14
-  C:014CH         LINE#         15
-  C:014FH         LINE#         16
-  C:0158H         LINE#         17
+  C:02FDH         LINE#         4
+  C:02FDH         LINE#         5
+  C:02FDH         LINE#         7
+  C:02FDH         LINE#         10
+  C:0300H         LINE#         11
+  C:0303H         LINE#         13
+  C:0303H         LINE#         14
+  C:0306H         LINE#         15
+  C:0309H         LINE#         16
+  C:0312H         LINE#         17
   -------         ENDPROC       _DELAY1MS_12MHZ
   -------         ENDMOD        TIMEDELAY
 
   -------         MODULE        DIGITALTUBE
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0179H         PUBLIC        setThousandDigit
-  C:0172H         PUBLIC        setHundredDigit
-  C:018EH         PUBLIC        setMillionDigit
-  C:0164H         PUBLIC        setSingleDigit
+  C:0346H         PUBLIC        setThousandDigit
+  C:033FH         PUBLIC        setHundredDigit
+  C:035BH         PUBLIC        setMillionDigit
+  C:0331H         PUBLIC        setSingleDigit
   D:0080H         PUBLIC        DigitalTubeSegment
-  C:0180H         PUBLIC        setTenThousandDigit
-  C:0195H         PUBLIC        setTenMillionDigit
+  C:034DH         PUBLIC        setTenThousandDigit
+  C:0362H         PUBLIC        setTenMillionDigit
   B:00A0H.2       PUBLIC        DigitalTubeSelect_0
   B:00A0H.3       PUBLIC        DigitalTubeSelect_1
   B:00A0H.4       PUBLIC        DigitalTubeSelect_2
-  D:002AH         SYMBOL        ARABIC_NUMBER
-  D:0034H         SYMBOL        DigitalTubeDecDigit
-  C:0187H         PUBLIC        setHundredThousandDigit
-  C:0159H         PUBLIC        clearDigitalTube
-  C:016BH         PUBLIC        setTenDigit
-  C:008FH         PUBLIC        DigitalTubeTest
+  D:002CH         SYMBOL        ARABIC_NUMBER
+  D:0036H         SYMBOL        DigitalTubeDecDigit
+  C:0354H         PUBLIC        setHundredThousandDigit
+  C:0313H         PUBLIC        clearDigitalTube
+  C:0338H         PUBLIC        setTenDigit
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/23/2022  15:12:39  PAGE 4
+
+
+  C:031EH         PUBLIC        initialization
+  C:01E0H         PUBLIC        DigitalTubeTest
   -------         PROC          SETSINGLEDIGIT
-  C:0164H         LINE#         5
-  C:0164H         LINE#         6
-  C:0164H         LINE#         7
-  C:0166H         LINE#         8
-  C:0168H         LINE#         9
-  C:016AH         LINE#         10
+  C:0331H         LINE#         5
+  C:0331H         LINE#         6
+  C:0331H         LINE#         7
+  C:0333H         LINE#         8
+  C:0335H         LINE#         9
+  C:0337H         LINE#         10
   -------         ENDPROC       SETSINGLEDIGIT
-BL51 BANKED LINKER/LOCATER V6.22                                                      05/23/2022  08:48:23  PAGE 4
-
-
   -------         PROC          SETTENDIGIT
-  C:016BH         LINE#         12
-  C:016BH         LINE#         13
-  C:016BH         LINE#         14
-  C:016DH         LINE#         15
-  C:016FH         LINE#         16
-  C:0171H         LINE#         17
+  C:0338H         LINE#         12
+  C:0338H         LINE#         13
+  C:0338H         LINE#         14
+  C:033AH         LINE#         15
+  C:033CH         LINE#         16
+  C:033EH         LINE#         17
   -------         ENDPROC       SETTENDIGIT
   -------         PROC          SETHUNDREDDIGIT
-  C:0172H         LINE#         19
-  C:0172H         LINE#         20
-  C:0172H         LINE#         21
-  C:0174H         LINE#         22
-  C:0176H         LINE#         23
-  C:0178H         LINE#         24
+  C:033FH         LINE#         19
+  C:033FH         LINE#         20
+  C:033FH         LINE#         21
+  C:0341H         LINE#         22
+  C:0343H         LINE#         23
+  C:0345H         LINE#         24
   -------         ENDPROC       SETHUNDREDDIGIT
   -------         PROC          SETTHOUSANDDIGIT
-  C:0179H         LINE#         26
-  C:0179H         LINE#         27
-  C:0179H         LINE#         28
-  C:017BH         LINE#         29
-  C:017DH         LINE#         30
-  C:017FH         LINE#         31
+  C:0346H         LINE#         26
+  C:0346H         LINE#         27
+  C:0346H         LINE#         28
+  C:0348H         LINE#         29
+  C:034AH         LINE#         30
+  C:034CH         LINE#         31
   -------         ENDPROC       SETTHOUSANDDIGIT
   -------         PROC          SETTENTHOUSANDDIGIT
-  C:0180H         LINE#         33
-  C:0180H         LINE#         34
-  C:0180H         LINE#         35
-  C:0182H         LINE#         36
-  C:0184H         LINE#         37
-  C:0186H         LINE#         38
+  C:034DH         LINE#         33
+  C:034DH         LINE#         34
+  C:034DH         LINE#         35
+  C:034FH         LINE#         36
+  C:0351H         LINE#         37
+  C:0353H         LINE#         38
   -------         ENDPROC       SETTENTHOUSANDDIGIT
   -------         PROC          SETHUNDREDTHOUSANDDIGIT
-  C:0187H         LINE#         40
-  C:0187H         LINE#         41
-  C:0187H         LINE#         42
-  C:0189H         LINE#         43
-  C:018BH         LINE#         44
-  C:018DH         LINE#         45
+  C:0354H         LINE#         40
+  C:0354H         LINE#         41
+  C:0354H         LINE#         42
+  C:0356H         LINE#         43
+  C:0358H         LINE#         44
+  C:035AH         LINE#         45
   -------         ENDPROC       SETHUNDREDTHOUSANDDIGIT
   -------         PROC          SETMILLIONDIGIT
-  C:018EH         LINE#         47
-  C:018EH         LINE#         48
-  C:018EH         LINE#         49
-  C:0190H         LINE#         50
-  C:0192H         LINE#         51
-  C:0194H         LINE#         52
+  C:035BH         LINE#         47
+  C:035BH         LINE#         48
+  C:035BH         LINE#         49
+  C:035DH         LINE#         50
+  C:035FH         LINE#         51
+  C:0361H         LINE#         52
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/23/2022  15:12:39  PAGE 5
+
+
   -------         ENDPROC       SETMILLIONDIGIT
   -------         PROC          SETTENMILLIONDIGIT
-  C:0195H         LINE#         53
-  C:0195H         LINE#         54
-  C:0195H         LINE#         55
-  C:0197H         LINE#         56
-  C:0199H         LINE#         57
-  C:019BH         LINE#         58
+  C:0362H         LINE#         53
+  C:0362H         LINE#         54
+  C:0362H         LINE#         55
+  C:0364H         LINE#         56
+  C:0366H         LINE#         57
+  C:0368H         LINE#         58
   -------         ENDPROC       SETTENMILLIONDIGIT
   -------         PROC          CLEARDIGITALTUBE
-BL51 BANKED LINKER/LOCATER V6.22                                                      05/23/2022  08:48:23  PAGE 5
-
-
-  C:0159H         LINE#         60
-  C:0159H         LINE#         61
-  C:0159H         LINE#         62
-  C:0160H         LINE#         63
-  C:0163H         LINE#         64
+  C:0313H         LINE#         60
+  C:0313H         LINE#         61
+  C:0313H         LINE#         62
+  C:031AH         LINE#         63
+  C:031DH         LINE#         64
   -------         ENDPROC       CLEARDIGITALTUBE
+  -------         PROC          INITIALIZATION
+  C:031EH         LINE#         66
+  C:031EH         LINE#         67
+  C:031EH         LINE#         68
+  C:0325H         LINE#         69
+  C:0328H         LINE#         70
+  -------         ENDPROC       INITIALIZATION
   -------         PROC          DIGITALTUBETEST
   -------         DO            
-  D:004CH         SYMBOL        i
-  D:004EH         SYMBOL        j
+  D:005CH         SYMBOL        i
+  D:005EH         SYMBOL        j
   -------         ENDDO         
-  C:008FH         LINE#         66
-  C:008FH         LINE#         67
-  C:008FH         LINE#         70
-  C:0092H         LINE#         71
-  C:0099H         LINE#         72
-  C:00A0H         LINE#         74
-  C:00A5H         LINE#         75
-  C:00A5H         LINE#         76
-  C:00ADH         LINE#         77
-  C:00B4H         LINE#         78
-  C:00C5H         LINE#         80
-  C:00CBH         LINE#         81
-  C:00CBH         LINE#         82
-  C:00DDH         LINE#         83
-  C:00E4H         LINE#         84
-  C:00F5H         LINE#         85
+  C:01E0H         LINE#         72
+  C:01E0H         LINE#         73
+  C:01E0H         LINE#         76
+  C:01E3H         LINE#         77
+  C:01EAH         LINE#         78
+  C:01F1H         LINE#         80
+  C:01F6H         LINE#         81
+  C:01F6H         LINE#         82
+  C:01FEH         LINE#         83
+  C:0205H         LINE#         84
+  C:0216H         LINE#         86
+  C:021CH         LINE#         87
+  C:021CH         LINE#         88
+  C:022EH         LINE#         89
+  C:0235H         LINE#         90
+  C:0246H         LINE#         91
   -------         ENDPROC       DIGITALTUBETEST
   -------         ENDMOD        DIGITALTUBE
 
+  -------         MODULE        NUMBEROPERATOR
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0247H         PUBLIC        _splitNumber
+  C:0329H         SYMBOL        _?ix1000
+  -------         PROC          _SPLITNUMBER
+  D:004EH         SYMBOL        number
+  -------         DO            
+  D:0050H         SYMBOL        bitNumbers
+  D:0058H         SYMBOL        quotient
+  D:005AH         SYMBOL        remainder
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/23/2022  15:12:39  PAGE 6
+
+
+  D:005BH         SYMBOL        loopCount
+  -------         ENDDO         
+  C:0247H         LINE#         3
+  C:024BH         LINE#         4
+  C:024BH         LINE#         5
+  C:025EH         LINE#         6
+  C:0264H         LINE#         7
+  C:0267H         LINE#         8
+  C:0269H         LINE#         9
+  C:026FH         LINE#         10
+  C:026FH         LINE#         11
+  C:0272H         LINE#         12
+  C:0272H         LINE#         14
+  C:0275H         LINE#         15
+  C:0275H         LINE#         16
+  C:0282H         LINE#         17
+  C:0289H         LINE#         18
+  C:0298H         LINE#         19
+  C:029EH         LINE#         20
+  C:029EH         LINE#         21
+  C:02A5H         LINE#         22
+  C:02ABH         LINE#         23
+  -------         ENDPROC       _SPLITNUMBER
+  -------         ENDMOD        NUMBEROPERATOR
+
+  -------         MODULE        ?C?COPY
+  C:00D3H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+  -------         MODULE        ?C?UIDIV
+  C:00F9H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
   -------         MODULE        ?C?ICALL
-  C:019CH         PUBLIC        ?C?ICALL
-  C:01A0H         PUBLIC        ?C?ICALL2
+  C:014EH         PUBLIC        ?C?ICALL
+  C:0152H         PUBLIC        ?C?ICALL2
   -------         ENDMOD        ?C?ICALL
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?INITIALIZATION?DIGITALTUBE
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?DIGITALTUBETEST?DIGITALTUBE
 
-Program Size: data=83.0 xdata=0 code=419
-LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SPLITNUMBER?NUMBEROPERATOR
+
+Program Size: data=99.0 xdata=0 code=874
+LINK/LOCATE RUN COMPLETE.  3 WARNING(S),  0 ERROR(S)

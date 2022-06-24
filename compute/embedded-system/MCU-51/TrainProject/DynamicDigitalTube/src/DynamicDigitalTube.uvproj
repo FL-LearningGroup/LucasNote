@@ -393,6 +393,16 @@
               <FileType>1</FileType>
               <FilePath>.\DigitalTube.c</FilePath>
             </File>
+            <File>
+              <FileName>NumberOperator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\NumberOperator.c</FilePath>
+            </File>
+            <File>
+              <FileName>NumberOperator.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\NumberOperator.h</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
