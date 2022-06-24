@@ -6,6 +6,3 @@ labels: ''
 assignees: ''
 
 ---
-
-- Issue: url
-- PR: url
