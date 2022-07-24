@@ -12,8 +12,8 @@
 # Computer Hardware
 ![computer hardware](./imgs/computer-hardware.drawio.png)
 
-# 工作阶段性标识
-![work stage tag](./imgs/work-stage-tag.drawio.png)
+# WorkFlow
+![work flow](./imgs/work-flow.drawio.png)
 
 # 应用开发
 **需求** -- **分析，拆分** --> **模块** -- **拆分** --> **功能** -- **组合** --> **应用**
