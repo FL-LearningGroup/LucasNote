@@ -67,8 +67,8 @@ $scriptPath = $PSScriptRoot
 $repoPath = "C:\Users\v-diya\repository\azure-powershell\Main\azure-powershell"
 Set-Location -Path $repoPath 
 $remoteRepo = 'origin'
-$moduleNameList = @('CostManagement')
-$branchName = 'CostManagement-auto-docs'
+$moduleNameList = @('Compute')
+$branchName = 'Compute-auto-docs'
 $excludeFileList = @('Changelog.md')
 
 try {
@@ -94,7 +94,7 @@ try {
         }
         
     }
-    Write-Host "Create and Checkout to $branchName"
+    Write-Host "Create new and Checkout to $branchName"
     $null = (git checkout -b $branchName)
 
 
@@ -104,7 +104,8 @@ try {
             $filePaths = (Get-ChildItem -Path (Join-Path $repoPath "src\$moduleName") -Recurse -File -Exclude $excludeFileList).FullName
             foreach($filePath in $filePaths) {
                 $fileContent = Get-Content -Path $filePath -Raw
-                if ($fileContent.Contains('https://docs.microsoft.com/powershell')) {
+                # file content may be empty
+                if (($null -ne $fileContent ) -and ($fileContent.Contains('https://docs.microsoft.com/powershell'))) {
                     $fileContent -replace 'https://docs.microsoft.com/powershell', 'https://learn.microsoft.com/powershell' | Set-Content -Path $filePath -Force
                 }
             }
@@ -126,13 +127,11 @@ try {
 }
 catch {
     Write-Error "An error occurred:"
-    Write-Error $_
+    Write-Error ($_ | Out-String)
     CleanBranch
-    if ((git branch --show-current) -ne 'main')
-    {
-        Write-Host "Delete branch $branchName"
-        (git branch -D $branchName)
-    }
+    (git checkout main)
+    Write-Host "Delete branch $branchName"
+    (git branch -D $branchName)
 
 }
 finally {
