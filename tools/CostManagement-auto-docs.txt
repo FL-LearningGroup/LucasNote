@@ -1,0 +1,45 @@
+On branch CostManagement-auto-docs
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/CostManagement/Az.CostManagement.psm1
+	modified:   src/CostManagement/create-model-cmdlets.ps1
+	modified:   src/CostManagement/custom/New-AzCostManagementQueryComparisonExpressionObject.ps1
+	modified:   src/CostManagement/custom/New-AzCostManagementQueryFilterObject.ps1
+	modified:   src/CostManagement/custom/README.md
+	modified:   src/CostManagement/custom/Update-AzCostManagementExport.ps1
+	modified:   src/CostManagement/exports/Get-AzCostManagementExport.ps1
+	modified:   src/CostManagement/exports/Get-AzCostManagementExportExecutionHistory.ps1
+	modified:   src/CostManagement/exports/Invoke-AzCostManagementExecuteExport.ps1
+	modified:   src/CostManagement/exports/Invoke-AzCostManagementQuery.ps1
+	modified:   src/CostManagement/exports/Invoke-AzCostManagementReservationDetailReport.ps1
+	modified:   src/CostManagement/exports/New-AzCostManagementDetailReport.ps1
+	modified:   src/CostManagement/exports/New-AzCostManagementExport.ps1
+	modified:   src/CostManagement/exports/New-AzCostManagementQueryComparisonExpressionObject.ps1
+	modified:   src/CostManagement/exports/New-AzCostManagementQueryFilterObject.ps1
+	modified:   src/CostManagement/exports/ProxyCmdletDefinitions.ps1
+	modified:   src/CostManagement/exports/README.md
+	modified:   src/CostManagement/exports/Remove-AzCostManagementExport.ps1
+	modified:   src/CostManagement/exports/Update-AzCostManagementExport.ps1
+	modified:   src/CostManagement/generated/runtime/BuildTime/Models/PsHelpMarkdownOutputs.cs
+	modified:   src/CostManagement/generated/runtime/BuildTime/Models/PsProxyTypes.cs
+	modified:   src/CostManagement/help/Az.CostManagement.md
+	modified:   src/CostManagement/help/Get-AzCostManagementExport.md
+	modified:   src/CostManagement/help/Get-AzCostManagementExportExecutionHistory.md
+	modified:   src/CostManagement/help/Invoke-AzCostManagementExecuteExport.md
+	modified:   src/CostManagement/help/Invoke-AzCostManagementQuery.md
+	modified:   src/CostManagement/help/Invoke-AzCostManagementReservationDetailReport.md
+	modified:   src/CostManagement/help/New-AzCostManagementDetailReport.md
+	modified:   src/CostManagement/help/New-AzCostManagementExport.md
+	modified:   src/CostManagement/help/New-AzCostManagementQueryComparisonExpressionObject.md
+	modified:   src/CostManagement/help/New-AzCostManagementQueryFilterObject.md
+	modified:   src/CostManagement/help/Remove-AzCostManagementExport.md
+	modified:   src/CostManagement/help/Update-AzCostManagementExport.md
+	modified:   src/CostManagement/how-to.md
+	modified:   src/CostManagement/internal/Get-AzCostManagementOperation.ps1
+	modified:   src/CostManagement/internal/New-AzCostManagementExport.ps1
+	modified:   src/CostManagement/internal/ProxyCmdletDefinitions.ps1
+	modified:   src/CostManagement/internal/README.md
+	modified:   src/CostManagement/internal/Update-AzCostManagementExport.ps1
+
+no changes added to commit (use "git add" and/or "git commit -a")

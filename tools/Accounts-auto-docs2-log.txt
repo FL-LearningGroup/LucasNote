@@ -1,0 +1,48 @@
+On branch Accounts-auto-docs2
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/Accounts/Accounts/Az.Accounts.psd1
+	modified:   src/Accounts/Accounts/help/About/about_az.help.txt
+	modified:   src/Accounts/Accounts/help/About/about_az.md
+	modified:   src/Accounts/Accounts/help/Add-AzEnvironment.md
+	modified:   src/Accounts/Accounts/help/Az.Accounts.md
+	modified:   src/Accounts/Accounts/help/Clear-AzConfig.md
+	modified:   src/Accounts/Accounts/help/Clear-AzContext.md
+	modified:   src/Accounts/Accounts/help/Clear-AzDefault.md
+	modified:   src/Accounts/Accounts/help/Connect-AzAccount.md
+	modified:   src/Accounts/Accounts/help/Disable-AzContextAutosave.md
+	modified:   src/Accounts/Accounts/help/Disable-AzDataCollection.md
+	modified:   src/Accounts/Accounts/help/Disable-AzureRmAlias.md
+	modified:   src/Accounts/Accounts/help/Disconnect-AzAccount.md
+	modified:   src/Accounts/Accounts/help/Enable-AzContextAutosave.md
+	modified:   src/Accounts/Accounts/help/Enable-AzDataCollection.md
+	modified:   src/Accounts/Accounts/help/Enable-AzureRmAlias.md
+	modified:   src/Accounts/Accounts/help/Export-AzConfig.md
+	modified:   src/Accounts/Accounts/help/Get-AzAccessToken.md
+	modified:   src/Accounts/Accounts/help/Get-AzConfig.md
+	modified:   src/Accounts/Accounts/help/Get-AzContext.md
+	modified:   src/Accounts/Accounts/help/Get-AzContextAutosaveSetting.md
+	modified:   src/Accounts/Accounts/help/Get-AzDefault.md
+	modified:   src/Accounts/Accounts/help/Get-AzEnvironment.md
+	modified:   src/Accounts/Accounts/help/Get-AzSubscription.md
+	modified:   src/Accounts/Accounts/help/Get-AzTenant.md
+	modified:   src/Accounts/Accounts/help/Import-AzConfig.md
+	modified:   src/Accounts/Accounts/help/Import-AzContext.md
+	modified:   src/Accounts/Accounts/help/Invoke-AzRestMethod.md
+	modified:   src/Accounts/Accounts/help/Open-AzSurveyLink.md
+	modified:   src/Accounts/Accounts/help/Register-AzModule.md
+	modified:   src/Accounts/Accounts/help/Remove-AzContext.md
+	modified:   src/Accounts/Accounts/help/Remove-AzEnvironment.md
+	modified:   src/Accounts/Accounts/help/Rename-AzContext.md
+	modified:   src/Accounts/Accounts/help/Resolve-AzError.md
+	modified:   src/Accounts/Accounts/help/Save-AzContext.md
+	modified:   src/Accounts/Accounts/help/Select-AzContext.md
+	modified:   src/Accounts/Accounts/help/Send-Feedback.md
+	modified:   src/Accounts/Accounts/help/Set-AzContext.md
+	modified:   src/Accounts/Accounts/help/Set-AzDefault.md
+	modified:   src/Accounts/Accounts/help/Set-AzEnvironment.md
+	modified:   src/Accounts/Accounts/help/Uninstall-AzureRm.md
+	modified:   src/Accounts/Accounts/help/Update-AzConfig.md
+
+no changes added to commit (use "git add" and/or "git commit -a")

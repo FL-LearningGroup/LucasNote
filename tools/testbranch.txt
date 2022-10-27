@@ -1,0 +1,51 @@
+On branch testbranch
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/Databricks/Az.Databricks.psm1
+	modified:   src/Databricks/create-model-cmdlets.ps1
+	modified:   src/Databricks/custom/New-AzDatabricksWorkspace.ps1
+	modified:   src/Databricks/custom/README.md
+	modified:   src/Databricks/custom/Update-AzDatabricksVNetPeering.ps1
+	modified:   src/Databricks/exports/Get-AzDatabricksAccessConnector.ps1
+	modified:   src/Databricks/exports/Get-AzDatabricksOutboundNetworkDependenciesEndpoint.ps1
+	modified:   src/Databricks/exports/Get-AzDatabricksVNetPeering.ps1
+	modified:   src/Databricks/exports/Get-AzDatabricksWorkspace.ps1
+	modified:   src/Databricks/exports/New-AzDatabricksAccessConnector.ps1
+	modified:   src/Databricks/exports/New-AzDatabricksVNetPeering.ps1
+	modified:   src/Databricks/exports/New-AzDatabricksWorkspace.ps1
+	modified:   src/Databricks/exports/ProxyCmdletDefinitions.ps1
+	modified:   src/Databricks/exports/README.md
+	modified:   src/Databricks/exports/Remove-AzDatabricksAccessConnector.ps1
+	modified:   src/Databricks/exports/Remove-AzDatabricksVNetPeering.ps1
+	modified:   src/Databricks/exports/Remove-AzDatabricksWorkspace.ps1
+	modified:   src/Databricks/exports/Update-AzDatabricksAccessConnector.ps1
+	modified:   src/Databricks/exports/Update-AzDatabricksVNetPeering.ps1
+	modified:   src/Databricks/exports/Update-AzDatabricksWorkspace.ps1
+	modified:   src/Databricks/generated/runtime/BuildTime/Models/PsHelpMarkdownOutputs.cs
+	modified:   src/Databricks/generated/runtime/BuildTime/Models/PsProxyTypes.cs
+	modified:   src/Databricks/help/Az.Databricks.md
+	modified:   src/Databricks/help/Get-AzDatabricksAccessConnector.md
+	modified:   src/Databricks/help/Get-AzDatabricksOutboundNetworkDependenciesEndpoint.md
+	modified:   src/Databricks/help/Get-AzDatabricksVNetPeering.md
+	modified:   src/Databricks/help/Get-AzDatabricksWorkspace.md
+	modified:   src/Databricks/help/New-AzDatabricksAccessConnector.md
+	modified:   src/Databricks/help/New-AzDatabricksVNetPeering.md
+	modified:   src/Databricks/help/New-AzDatabricksWorkspace.md
+	modified:   src/Databricks/help/Remove-AzDatabricksAccessConnector.md
+	modified:   src/Databricks/help/Remove-AzDatabricksVNetPeering.md
+	modified:   src/Databricks/help/Remove-AzDatabricksWorkspace.md
+	modified:   src/Databricks/help/Update-AzDatabricksAccessConnector.md
+	modified:   src/Databricks/help/Update-AzDatabricksVNetPeering.md
+	modified:   src/Databricks/help/Update-AzDatabricksWorkspace.md
+	modified:   src/Databricks/how-to.md
+	modified:   src/Databricks/internal/Get-AzDatabricksOperation.ps1
+	modified:   src/Databricks/internal/New-AzDatabricksAccessConnector.ps1
+	modified:   src/Databricks/internal/New-AzDatabricksVNetPeering.ps1
+	modified:   src/Databricks/internal/New-AzDatabricksWorkspace.ps1
+	modified:   src/Databricks/internal/ProxyCmdletDefinitions.ps1
+	modified:   src/Databricks/internal/README.md
+	modified:   src/Databricks/internal/Set-AzDatabricksVNetPeering.ps1
+	modified:   src/Databricks/internal/Update-AzDatabricksWorkspace.ps1
+
+no changes added to commit (use "git add" and/or "git commit -a")
