@@ -11,12 +11,13 @@ class FolderParallelSync {
 try {
     $scriptPath = $PSScriptRoot
     $topFolderPath = "C:\Users\v-diya\repository\azure-powershell\Main\azure-powershell\src"
-    Set-Location -Path $repoPath 
+    Set-Location -Path $topFolderPath 
     $moduleParallelDataSet = @();
     $id = 0;
     foreach($moduleFolderPath in (Get-ChildItem -Path $topFolderPath -Directory).FullName) {
         $moduleParallel = [FolderParallelSync]::new()
         $moduleParallel.Id = $id++
+        $moduleParallel.FolderPath = $moduleFolderPath
         $moduleParallel.ModuleName = $moduleFolderPath.Split('\')[-1]
         $moduleParallelDataSet += $moduleParallel
     }
@@ -33,7 +34,7 @@ try {
     $moduleSummarySync = [System.Collections.Hashtable]::Synchronized($moduleSummaryOrigin);
     
 
-    $job = $moduleParallelDataSet | ForEach-Object -ThrottleLimit 5 -AsJob -Parallel {
+    $job = $moduleParallelDataSet | ForEach-Object -ThrottleLimit 3 -AsJob -Parallel {
         $syncCopy = $using:sync
         $moduleSummarySyncCopy = $using:moduleSummarySync
         # Set property id of the syncCopy address point process.
@@ -49,7 +50,7 @@ try {
             $process.Status = "Handling $($fileNumber + 1)/$filePathCount"
             $process.PercentComplete = (($fileNumber / $filePathCount) * 100)
 
-            if(($filePathList[$fileNumber] | Get-Content | Out-String) -match 'https://docs.microsoft.com/powershell') {
+            if(((Get-Content -Path $filePathList[$fileNumber]) | Out-String) -match 'https://docs.microsoft.com/powershell') {
                 ($moduleSummarySyncCopy.$($PSItem.ModuleName))++
             }
         }
@@ -74,7 +75,7 @@ try {
     }
 
     Write-Host -ForegroundColor Green "Summary result"
-    $moduleSummarySync
+    $moduleSummaryOrigin | Sort-Object -Property name -Descending  
 
 } catch {
     Write-Error "An error occurred"
