@@ -16,8 +16,9 @@
 ```
 {
     'code': 'number，代表错误类型'
-    'message': 'string,反馈给客户的错误信息'
-    'exception': 'object,详细的错误信息'
+    'message': 'string, 反馈给客户的错误详细信息'
+    'exception': 'object,详细的错误信息'，
+    'help': 'post url,用来提交错误信息'
 }
 ```
 # Service Pages Api
