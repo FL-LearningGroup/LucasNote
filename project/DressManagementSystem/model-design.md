@@ -1,13 +1,34 @@
+# Entity Model
+```json
+{
+    "sysId": {
+        "type": "text",
+        "description": "system unique indetity.",
+        "readyOnly": true
+    },
+    "createTime": {
+        "type":"datetime",
+        "description": "system create time.",
+        "readyOnly": true
+    },
+    "updateTime": {
+        "type":"datetime",
+        "description": "system create time.",
+        "readyOnly": true
+    },
+}
+
+```
 # Dress Model
 ```json
 {
-    "images": {
-        "type": "array",
-        "description": "collection includes dress images."
-    },
     "name": {
         "type": "text",
         "description": "dress name."
+    },
+    "images": {
+        "type": "array",
+        "description": "collection includes dress images."
     },
     "description": {
         "type": "text",

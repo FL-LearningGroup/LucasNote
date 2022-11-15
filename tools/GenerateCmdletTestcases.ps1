@@ -27,19 +27,27 @@ $variableConfigurations = @{
 $testScriptFormat = "Describe 'cmdlet' {`ntest`n}"
 $testCaseScriptFormat = "`tIt 'variant' {`n`t`t{`ntestcases`n`t`t} | Should -Not -Throw`n`t}"
 
-foreach($file in (Get-ChildItem -Path ./docs -Exclude 'Az.*','README.md')) {
+foreach($file in (Get-ChildItem -Path (Join-Path $PSScriptRoot ./docs) -Exclude 'Az.*','README.md')) {
     $cmdlet = [Cmdlet]::new()
     $cmdlet.Name = $file.Name.Split('.')[0]
     $cmdletDocText = (Get-Content -Path $file.FullName) | Out-String
     $cmdletSytanxs = $cmdletDocText.Substring($cmdletDocText.IndexOf('## SYNTAX'), $cmdletDocText.IndexOf('## DESCRIPTION') - $cmdletDocText.IndexOf('## SYNTAX')).Split([System.Environment]::NewLine,[System.StringSplitOptions]::RemoveEmptyEntries)
     $cmdletExamples = $cmdletDocText.Substring($cmdletDocText.IndexOf('## EXAMPLES'), $cmdletDocText.IndexOf('## PARAMETERS') - $cmdletDocText.IndexOf('## EXAMPLES')).Split([System.Environment]::NewLine,[System.StringSplitOptions]::RemoveEmptyEntries)
     # Get variant for the cmdlet sytanx
+    $isExistVaruant = $false
     foreach($sytanx in $cmdletSytanxs) {
         if ($sytanx -match '###') {
+            $isExistVaruant = $true
             $cmdletItem = [CmdletItem]::new()
             $cmdletItem.Variant = $sytanx.Split(' ')[1]
             $cmdlet.Items += $cmdletItem
         }
+    }
+    # Only default variant. But not display in doc file. This scenario exists in the New cmdlet
+    if(!$isExistVaruant) {
+        $cmdletItem = [CmdletItem]::new()
+        $cmdletItem.Variant = 'default'
+        $cmdlet.Items += $cmdletItem
     }
     # variant index for keep vaiant and example keep in same order.
     $variantIndex = 0
@@ -47,6 +55,7 @@ foreach($file in (Get-ChildItem -Path ./docs -Exclude 'Az.*','README.md')) {
         if($cmdletExamples[$index] -match '```powershell') {
             $index++ # Skip ```powershell line
             do {
+                Write-Warning $cmdlet.Name
                 $cmdlet.Items[$variantIndex].Examples += $cmdletExamples[$index]
             }until ($cmdletExamples[++$index] -match '```')
             $variantIndex++
@@ -74,7 +83,7 @@ foreach($cmdlet in $cmdletCollection) {
 
 # Insert cmdlet test to cmdlet test ps1 file.
 foreach($cmdlet in $cmdletCollection) {
-    $cmdletTestPs1File = "./test/$($cmdlet.Name).Tests.ps1"
+    $cmdletTestPs1File = (Join-Path $PSScriptRoot "./test/$($cmdlet.Name).Tests.ps1")
     $cmdletTestPs1Content = Get-Content -Path $cmdletTestPs1File  | Out-String
     $cmdletTestPs1Content -replace "Describe((.|`n)*)", $cmdlet.TestScript | Set-Content -Path $cmdletTestPs1File
 }
