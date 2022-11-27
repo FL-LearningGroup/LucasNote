@@ -1,11 +1,16 @@
-class GitPRModule {
-    <# Define the class. Try constructors, properties, or methods #>
+class AzurePwshModule {
     [string]$ModuleName
     [string]$ModuleFolder
+}
+
+class GitPRModule {
+    <# Define the class. Try constructors, properties, or methods #>
     [string]$BranchName
     [string]$Status
     [string]$PRUrl
     [string]$Comments
+    [string]$ModuleName
+    [AzurePwshModule[]]$AzurePwsh
 }
 
 function  IsExistGitBranch {
@@ -190,22 +195,29 @@ try {
     $modulePath = '/Users/aitest/Documents/LucasGitHub/azure-powershell/src'
     $azurePowerShellRepoUrl = 'https://github.com/Azure/azure-powershell'
     
-    $whiteModules = (Get-Content -Path (Join-Path $PSScriptRoot 'ReplaceAzurePowerShellModelDocUrl.config.json') | ConvertFrom-Json).whiteModules
+    $whiteModuleCollection = (Get-Content -Path (Join-Path $PSScriptRoot 'ReplaceAzurePowerShellModelDocUrl.config.json') | ConvertFrom-Json).whiteModules
     $gitPRModuleList = @()
+    $azurePwshModule = @()
     $notModuleFolders = @('lib','shared')
     # target folders under the module folder.
     # $targetFolders = @('help', 'examples', 'custom')
     $excludeFiles = @('ChangeLog.md')
 
     Set-Location -Path $modulePath
-    $moduleFolders = (Get-ChildItem -Path . -Directory -Exclude $notModuleFolders) | Where-Object {$whiteModules -contains $_.Name }
-    
-    foreach($moduleFolder in $moduleFolders) {
+    # Get white modules item
+    foreach ($whiteModules in $whiteModuleCollection) {
+        $moduleFolders = (Get-ChildItem -Path . -Directory -Exclude $notModuleFolders) | Where-Object {$whiteModules -contains $_.Name }
+        $branchName = $moduleFolders.Name -join '-'
         $gitPRModule = [GitPRModule]::new()
-        $gitPRModule.ModuleName = $moduleFolder.Name
-        $gitPRModule.ModuleFolder = $moduleFolder.FullName
-        $gitPRModule.BranchName =  "$($moduleFolder.Name)/helpurl"
-        $gitPRModule.Status = 'Failed'
+        $gitPRModule.BranchName =  "$branchName/helpurl"
+        $gitPRModule.Status = 'Wait'
+        foreach($moduleFolder in $moduleFolders) {
+            $azurePwshModule = [AzurePwshModule]::new()
+            $azurePwshModule.ModuleName = $moduleFolder.Name
+            $azurePwshModule.ModuleFolder = $moduleFolder.FullName
+            $gitPRModule.AzurePwsh += $azurePwshModule          
+        }
+        $gitPRModule.ModuleName = ($gitPRModule.AzurePwsh.ModuleName -join '|')
         $gitPRModuleList += $gitPRModule
     }
     foreach($gitPRModule in $gitPRModuleList) {
@@ -225,22 +237,24 @@ try {
         }
         try {
             (SwitchGitBranch -Branch $gitPRModule.BranchName)
-            $moduleFileList = (Get-ChildItem -Path $gitPRModule.ModuleFolder -File -Recurse -Exclude $excludeFiles)
-            foreach($moduleFile in $moduleFileList) {
-                # "https://docs.microsoft.com/powershell","https://learn.microsoft.com/powershell"
-                (ReplaceFileContent -OldContent 'https://docs.microsoft.com/powershell' -NewContent 'https://learn.microsoft.com/powershell' -FilePath $moduleFile.FullName)
+            foreach($azurePwsh in $gitPRModule.AzurePwsh) {
+                $moduleFileList = (Get-ChildItem -Path $azurePwsh.ModuleFolder -File -Recurse -Exclude $excludeFiles)
+                foreach($moduleFile in $moduleFileList) {
+                    # "https://docs.microsoft.com/powershell","https://learn.microsoft.com/powershell"
+                    (ReplaceFileContent -OldContent 'https://docs.microsoft.com/powershell' -NewContent 'https://learn.microsoft.com/powershell' -FilePath $moduleFile.FullName)
+                }
             }
-
             (AddGitChanged)
-            $message = "[main - $($gitPRModule.ModuleName)] domain name of online doc is changed from docs.microsoft.com to learn.microsoft.com."
+            $moduleTitle = $gitPRModule.AzurePwsh.ModuleName -join '|'
+            $message = "[main - $moduleTitle] domain name of online doc is changed from docs.microsoft.com to learn.microsoft.com."
             (CommitGitChanged -Message $message)
             (PushGitBranch -Remote 'origin' -Branch $gitPRModule.BranchName)
             $pr = New-GitHubPullRequest -Uri $azurePowerShellRepoUrl -Head $gitPRModule.BranchName -Base 'main' -Title $message -Body $prBody
-            $gitPRModule.PRUrl = $pr.url
+            $gitPRModule.PRUrl = $pr.html_url
             $gitPRModule.Status = 'Success'
             SwitchGitBranch -Branch 'main'
 
-            $gitPRModule | Format-Table
+            $gitPRModule | Select-Object -Property BranchName, ModuleName, Status, PRUrl, Comments | Format-Table
         } catch {
             $gitPRModule.Status = 'Failed'
             $gitPRModule.comments = ($_ | Out-String)
@@ -261,8 +275,11 @@ try {
         Write-Error "An error ocurred"
         Write-Error ($_ | Out-String)
     }
+    Write-Host -ForegroundColor Green "Summary as following"
+    $gitPRModuleList | Select-Object -Property BranchName, ModuleName, Status, PRUrl, Comments | Format-Table
     Set-Location $scriptPath
     $resultFilePath = "az-domain-replaced-$((Get-Date).ToString('yyyyMMddHHmmss')).csv"
     Write-Host "The output result to the $resultFilePath"
-    $gitPRModuleList | Export-Csv -Path  $resultFilePath -NoClobber
+    
+    $gitPRModuleList | Select-Object -Property BranchName, ModuleName, Status, PRUrl, Comments | Export-Csv -Path  $resultFilePath -NoClobber
 }

@@ -1,0 +1,4 @@
+"BranchName","ModuleName","Status","PRUrl","Comments"
+"Accounts-ADDomainServices-Advisor-Aks-AlertsManagement/helpurl","Accounts|ADDomainServices|Advisor|Aks|AlertsManagement","Success","https://github.com/Azure/azure-powershell/pull/20263",
+"AnalysisServices-ApiManagement-App-AppConfiguration-ApplicationInsights/helpurl","AnalysisServices|ApiManagement|App|AppConfiguration|ApplicationInsights","Success","https://github.com/Azure/azure-powershell/pull/20264",
+"Attestation-Automanage-Automation-BareMetal-Batch/helpurl","Attestation|Automanage|Automation|BareMetal|Batch","Success","https://github.com/Azure/azure-powershell/pull/20265",
