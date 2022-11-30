@@ -1,0 +1,43 @@
+{
+    "azurePwshRepo": {
+        "repoUrl": "https://github.com/Azure/azure-powershell.git",
+        "generateionBranch": "generation",
+        "mainBranch": "main"
+    },
+    "azurePwshModule": {
+        "moduleName": "Az.Databricks",
+        "type": "new|upgrade"
+    },
+    "azPwshModuleSwagger": {
+        "oldFiles": [
+            {
+                "resourceType": "databricks",
+                "uri": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aafb0944f7ab936e8cfbad8969bd5eb32263fb4f/specification/databricks/resource-manager/Microsoft.Databricks/preview/2022-04-01-preview/databricks.json"
+            },
+            {
+                "resourceType": "vnetpeering",
+                "uri": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aafb0944f7ab936e8cfbad8969bd5eb32263fb4f/databricks/resource-manager/Microsoft.Databricks/preview/2022-04-01-preview/vnetpeering.json"
+            },
+            {
+                "resourceType": "accessconnector",
+                "uri": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aafb0944f7ab936e8cfbad8969bd5eb32263fb4f/databricks/resource-manager/Microsoft.Databricks/preview/2022-04-01-preview/accessconnector.json"
+            }
+            
+        ],
+        "newFiles": [
+            {
+                "resourceType": "databricks",
+                "uri": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aafb0944f7ab936e8cfbad8969bd5eb32263fb4f/specification/databricks/resource-manager/Microsoft.Databricks/preview/2022-04-01-preview/databricks.json"
+            },
+            {
+                "resourceType": "vnetpeering",
+                "uri": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aafb0944f7ab936e8cfbad8969bd5eb32263fb4f/databricks/resource-manager/Microsoft.Databricks/preview/2022-04-01-preview/vnetpeering.json"
+            },
+            {
+                "resourceType": "accessconnector",
+                "uri": "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/aafb0944f7ab936e8cfbad8969bd5eb32263fb4f/databricks/resource-manager/Microsoft.Databricks/preview/2022-04-01-preview/accessconnector.json"
+            }
+            
+        ]
+    }
+}
