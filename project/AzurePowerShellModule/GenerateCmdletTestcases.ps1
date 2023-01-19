@@ -24,6 +24,7 @@ $variableConfigurations = @{
     Location = '$env.location';
 }
 
+
 $testScriptFormat = "Describe 'cmdlet' {`ntest`n}"
 $testCaseScriptFormat = "`tIt 'variant' {`n`t`t{`ntestcases`n`t`t} | Should -Not -Throw`n`t}"
 
